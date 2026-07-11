@@ -90,6 +90,7 @@ place the brand speaks from.
 
 | Template | Look | Picked automatically when |
 | --- | --- | --- |
+| `mark` | The photo, full bleed, and a small wordmark — nothing else. The logo lands in the quietest corner (`--logo-pos` overrides), cream on dark ground, ink on light | `--template mark` |
 | `plate` | Walnut evening, gilt double-fillet frame, wordmark | single dark photo |
 | `ledger` | Parchment morning, deco corner brackets, `№` ledger mark | single bright photo |
 | `full-bleed` | Photo full canvas, vignette, selvage | `--template full-bleed` |

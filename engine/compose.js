@@ -9,8 +9,9 @@ const {
   loadBrand, renderTemplate, fileUrl, seededRng,
 } = require('./lib');
 
-const SINGLE_TEMPLATES = ['plate', 'full-bleed', 'ledger', 'quote'];
+const SINGLE_TEMPLATES = ['plate', 'full-bleed', 'ledger', 'quote', 'mark'];
 const TEMPLATES = [...SINGLE_TEMPLATES, 'carousel'];
+const LOGO_POSITIONS = ['tl', 'tr', 'bl', 'br'];
 
 async function launchBrowser() {
   const { chromium } = require('playwright');
@@ -33,25 +34,52 @@ async function probePhotos(page, photos) {
   await page.goto(fileUrl(path.join(TEMPLATE_DIR, 'probe.html')));
   const results = [];
   for (const photo of photos) {
+    if (!fs.existsSync(photo)) {
+      throw new Error(`Photo not found: ${photo}`);
+    }
     const info = await page.evaluate(async (url) => {
       const img = new Image();
       img.src = url;
       await img.decode();
-      const size = 32;
+      const size = 64;
       const canvas = document.createElement('canvas');
       canvas.width = size;
       canvas.height = size;
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
       ctx.drawImage(img, 0, 0, size, size);
       const { data } = ctx.getImageData(0, 0, size, size);
+      const lum = (x, y) => {
+        const i = (y * size + x) * 4;
+        return (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
+      };
       let sum = 0;
-      for (let i = 0; i < data.length; i += 4) {
-        sum += 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
-      }
+      for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) sum += lum(x, y);
+
+      // Per-corner mean + standard deviation (a quiet corner takes a logo well).
+      const block = 20;
+      const corner = (x0, y0) => {
+        let s = 0, s2 = 0;
+        for (let y = y0; y < y0 + block; y++) {
+          for (let x = x0; x < x0 + block; x++) {
+            const v = lum(x, y);
+            s += v;
+            s2 += v * v;
+          }
+        }
+        const n = block * block;
+        const mean = s / n;
+        return { mean, sd: Math.sqrt(Math.max(0, s2 / n - mean * mean)) };
+      };
       return {
         width: img.naturalWidth,
         height: img.naturalHeight,
-        luminance: sum / (data.length / 4) / 255,
+        luminance: sum / (size * size),
+        corners: {
+          tl: corner(0, 0),
+          tr: corner(size - block, 0),
+          bl: corner(0, size - block),
+          br: corner(size - block, size - block),
+        },
       };
     }, fileUrl(photo));
     results.push({ file: photo, ...info });
@@ -117,10 +145,43 @@ function selvageText(brand) {
   return Array(4).fill(unit).join(' · ') + ' ·';
 }
 
-function templateData({ slide, format, theme, content, brand, name }) {
+// Mark template: drop the wordmark in the quietest corner (lowest texture),
+// bottom corners preferred; cream on dark ground, walnut ink on light.
+function decideMark(probe, logoPos) {
+  let pos = logoPos && logoPos !== 'auto' ? logoPos : null;
+  if (pos && !LOGO_POSITIONS.includes(pos)) {
+    throw new Error(`Unknown logo position "${pos}". Use one of: ${LOGO_POSITIONS.join(', ')}, auto.`);
+  }
+  const corners = probe?.corners;
+  if (!pos) {
+    if (!corners) {
+      pos = 'br';
+    } else {
+      const score = (k) => corners[k].sd + (k.startsWith('t') ? 0.06 : 0);
+      pos = [...LOGO_POSITIONS].sort((a, b) => score(a) - score(b))[0];
+    }
+  }
+  const mean = corners?.[pos]?.mean ?? 0.3;
+  return { markPos: `pos-${pos}`, markFill: mean > 0.62 ? 'fill-ink' : 'fill-cream' };
+}
+
+// When a much-taller photo is cover-cropped into a squarer canvas, bias the
+// visible window toward the upper third, where the subject usually is.
+function photoPosition(probe, format) {
+  if (!probe) return 'center';
+  const photoAR = probe.width / probe.height;
+  const formatAR = format.width / format.height;
+  return photoAR < formatAR * 0.8 ? 'center 30%' : 'center';
+}
+
+function templateData({ slide, format, theme, content, brand, name, probes, logoPos }) {
   const rng = seededRng(`ledger:${name}`);
   const ledgerNo = String(1 + Math.floor(rng() * 899)).padStart(3, '0');
+  const probe = slide.photo ? (probes || []).find((p) => p.file === slide.photo) : null;
+  const mark = slide.template === 'mark' ? decideMark(probe, logoPos) : {};
   return {
+    photoPos: photoPosition(probe, brand.formats[format]),
+    ...mark,
     theme,
     formatClass: `format-${format}`,
     tokensUrl: fileUrl(path.join(BRAND_DIR, 'tokens.css')),
@@ -199,7 +260,7 @@ async function createPost(opts) {
       const formatDir = path.join(outDir, format);
       fs.mkdirSync(formatDir, { recursive: true });
       for (const slide of slides) {
-        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name });
+        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos });
         const tpl = fs.readFileSync(path.join(TEMPLATE_DIR, `${slide.template}.html`), 'utf8');
         const htmlPath = path.join(buildDir, `${format}-${slide.index}.html`);
         fs.writeFileSync(htmlPath, renderTemplate(tpl, data));
