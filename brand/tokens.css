@@ -1,0 +1,317 @@
+/* =========================================================================
+   Private Pattern — Colors & Type
+   The Atelier Ledger / Mahogany Smoking Lounge palette.
+   Token names mirror the production codebase (--atelier-*, --sr-*).
+   ========================================================================= */
+
+/* =========================================================================
+   Fonts — all self-hosted from fonts/. No CDN dependency.
+   ========================================================================= */
+
+/* Body, sub-text & ledger numerals — JetBrains Mono (variable, wght 100–800) */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Headings — Copperplate (engraved caps). OPTI digitization carries the
+   light→regular→heavy spine the brand uses at weight 400; CC fills the bold. */
+@font-face {
+  font-family: 'Copperplate';
+  src: url('fonts/OPTICopperplate-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Copperplate';
+  src: url('fonts/OPTICopperplate.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Copperplate';
+  src: url('fonts/CopperplateCC-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Copperplate';
+  src: url('fonts/CopperplateCC-Heavy.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Copperplate';
+  src: url('fonts/OPTICopperplate-Heavy.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Accent — Emily Austin signature script */
+@font-face {
+  font-family: 'Emily Austin';
+  src: url('fonts/EmilyAustin.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ledger-numeral fallback — Geist (variable) */
+@font-face {
+  font-family: 'Geist';
+  src: url('fonts/Geist-Variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- Typography stacks ---------- */
+  /* Heading — Copperplate (engraved, caps-only gothic), self-hosted from
+     fonts/ (OPTI + CC). Falls back Copperplate Gothic → Big Caslon → serif. */
+  --atelier-serif: 'Copperplate', 'Copperplate Gothic Light', 'Copperplate Gothic', 'Big Caslon', Georgia, serif;  /* @kind font */
+  /* Body & sub-text — JetBrains Mono (self-hosted variable); mono fallbacks. */
+  --atelier-sans: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;  /* @kind font */
+  /* Ledger numerals & mono — JetBrains Mono, Geist kept as local fallback. */
+  --atelier-mono: 'JetBrains Mono', 'Geist', ui-monospace, 'SF Mono', Menlo, monospace;  /* @kind font */
+  /* Accent — Emily Austin signature script, self-hosted; script fallback. */
+  --atelier-accent: 'Emily Austin', 'Snell Roundhand', 'Brush Script MT', cursive;  /* @kind font */
+
+  /* ---------- Brand colors — brass family ---------- */
+  --atelier-gold:        #b8976a;            /* primary brass */
+  --atelier-gold-bright: #d4b079;            /* lit-by-lamp brass — hover, focal */
+  --atelier-gold-dim:    rgba(184, 151, 106, 0.35);  /* hairlines, dim frames */
+  --atelier-gold-soft:   rgba(184, 151, 106, 0.08);  /* subtle wash fills */
+  --atelier-gold-deep:   #8c6932;            /* morning-mode pressed brass */
+
+  /* ---------- Walnut / Mahogany substrate (evening default) ---------- */
+  --sr-slate-950:        #120b07;            /* near-black walnut — deepest shadow */
+  --sr-slate-900:        #1a1109;            /* ebonized oak — ribbon fill */
+  --sr-slate-800:        #241710;            /* mahogany base — main wall */
+  --sr-slate-700:        #32201a;            /* rich walnut — silk midtone */
+  --sr-slate-600:        #4a3020;            /* aged cognac leather — highlight */
+  --silk-evening:        #3a2618;            /* silk WebGL color — evening */
+  --silk-morning:        #a07541;            /* silk WebGL color — morning */
+
+  /* ---------- Parchment / cream ink ---------- */
+  --atelier-cream:       #f0e4c9;            /* ivory wordmark fill */
+  --atelier-parchment:   #f5edc8;            /* page bg — morning mode */
+  --atelier-ink:         #281a0e;            /* pressed walnut ink */
+
+  /* ---------- Foreground tokens ---------- */
+  --atelier-text-hi:     rgba(245, 237, 220, 0.95);   /* parchment-on-walnut */
+  --atelier-text-mid:    rgba(245, 237, 220, 0.62);
+  --atelier-text-low:    rgba(245, 237, 220, 0.35);
+
+  /* ---------- Hairlines & rules ---------- */
+  --atelier-rule:        rgba(184, 151, 106, 0.28);
+  --atelier-rule-soft:   rgba(184, 151, 106, 0.12);
+
+  /* ---------- Surfaces (translucent walnut layers) ---------- */
+  --surface-card:        rgba(26, 17, 9, 0.72);
+  --surface-card-deep:   rgba(10, 5, 2, 0.45);
+  --surface-button:      rgba(26, 17, 9, 0.55);
+  --surface-button-hover: rgba(26, 17, 9, 0.75);
+
+  /* ---------- Shadows / elevations ---------- */
+  --shadow-card:
+    inset 0 1px 0 rgba(232, 196, 138, 0.06),
+    0 10px 28px -14px rgba(0, 0, 0, 0.6);
+  --shadow-button:
+    0 6px 18px -8px rgba(0, 0, 0, 0.5);
+  --shadow-plaque:
+    inset 0 0 0 4px rgba(20, 12, 6, 0.7),
+    inset 0 0 0 5px var(--atelier-gold-dim),
+    inset 0 1px 0 rgba(232, 196, 138, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 12px 32px -14px rgba(0, 0, 0, 0.75),
+    0 2px 6px -2px rgba(0, 0, 0, 0.5);
+  --shadow-brass-aura:    0 0 28px -10px rgba(184, 151, 106, 0.25);
+  --shadow-brass-aura-hi: 0 0 36px -8px rgba(212, 176, 121, 0.4);
+
+  /* ---------- Radii — squared by design ---------- */
+  --radius-sharp:  0;       /* boutique signage, ledger plates */
+  --radius-hair:   2px;     /* most CTAs, cost notes */
+  --radius-card:   3px;     /* cards, modals */
+  --radius-pill:   9999px;  /* rare; only on monogram badges */
+
+  /* ---------- Spacing scale (8pt-ish, irregular) ---------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-7:  32px;
+  --sp-8:  40px;
+  --sp-9:  48px;
+  --sp-10: 64px;
+  --sp-11: 96px;
+
+  /* ---------- Motion ---------- */
+  --ease-plaque: cubic-bezier(0.22, 0.75, 0.28, 1);  /* @kind other */
+  --ease-loader: cubic-bezier(0.55, 0.15, 0.45, 0.85);  /* @kind other */
+  --dur-fast:    180ms;  /* @kind other */
+  --dur-base:    250ms;  /* @kind other */
+  --dur-slow:    450ms;  /* @kind other */
+  --dur-sheen:   900ms;  /* @kind other */
+
+  /* ---------- Tracking system ---------- */
+  --track-tight:     0.045em;  /* Copperplate headings (h1/h2) */
+  --track-display:   0.02em;   /* Copperplate hero — engraved caps */
+  --track-body:      0.005em;
+  --track-caps-lg:   0.12em;   /* serif marquee caps */
+  --track-caps-md:   0.18em;   /* small-caps eyebrow */
+  --track-caps-hi:   0.22em;   /* button labels */
+  --track-caps-xhi:  0.34em;   /* "FOR" hero label */
+}
+
+/* Morning-mode global remap (parchment + walnut ink). Production code
+   sets this on <html data-theme="morning"> from useAutoTheme.js. */
+html[data-theme='morning'] {
+  --atelier-text-hi:     rgba(40, 26, 14, 0.92);
+  --atelier-text-mid:    rgba(40, 26, 14, 0.62);
+  --atelier-text-low:    rgba(40, 26, 14, 0.35);
+  --atelier-gold:        #8c6932;
+  --atelier-gold-bright: #6b4e22;
+  --atelier-gold-dim:    rgba(140, 105, 50, 0.35);
+  --atelier-rule:        rgba(140, 105, 50, 0.28);
+  --atelier-rule-soft:   rgba(140, 105, 50, 0.12);
+}
+
+/* =========================================================================
+   Semantic typography — ledger entries & maker plates
+   ========================================================================= */
+
+.t-display {
+  font-family: var(--atelier-serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(72px, 12vw, 132px);
+  letter-spacing: var(--track-display);
+  line-height: 1.02;
+  padding-bottom: 0.08em;
+  color: var(--atelier-text-hi);
+}
+
+.t-h1 {
+  font-family: var(--atelier-serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 44px;
+  letter-spacing: var(--track-tight);
+  line-height: 0.95;
+  color: var(--atelier-text-hi);
+}
+
+.t-h2 {
+  font-family: var(--atelier-serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: var(--track-tight);
+  line-height: 1.08;
+  color: var(--atelier-text-hi);
+}
+
+.t-h3 {
+  font-family: var(--atelier-serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  color: var(--atelier-text-hi);
+}
+
+/* Plaque — engraved upright serif used on CTAs */
+.t-plaque {
+  font-family: var(--atelier-serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+/* Body — Instrument Sans */
+.t-body {
+  font-family: var(--atelier-sans);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: var(--track-body);
+  color: var(--atelier-text-mid);
+}
+
+.t-body-sm {
+  font-family: var(--atelier-sans);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--atelier-text-mid);
+}
+
+/* Eyebrow — small-caps brass label */
+.t-eyebrow {
+  font-family: var(--atelier-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: var(--track-caps-md);
+  text-transform: uppercase;
+  color: var(--atelier-gold-bright);
+}
+
+/* Button label */
+.t-btn {
+  font-family: var(--atelier-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: var(--track-caps-hi);
+  text-transform: uppercase;
+}
+
+/* Folio — for "FOR" hero label, full caps wide tracking */
+.t-folio {
+  font-family: var(--atelier-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: var(--track-caps-xhi);
+  text-transform: uppercase;
+  color: var(--atelier-gold);
+}
+
+/* Mono — Geist for measurements, codes, ledger numerals */
+.t-mono {
+  font-family: var(--atelier-mono);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--atelier-text-mid);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Accent — Emily Austin signature script, for member names & flourishes */
+.t-accent {
+  font-family: var(--atelier-accent);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--atelier-gold-bright);
+}

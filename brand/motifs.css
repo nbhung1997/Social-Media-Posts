@@ -1,0 +1,252 @@
+/* =========================================================================
+   Summer 2026 — deco motif primitives
+   Each motif is a reusable CSS class. Apply to any element.
+
+   Inventory:
+     .s26-sunburst        Chrysler-spire radial fan (SVG bg)
+     .s26-skyline-frame   Stepped pyramid corner brackets
+     .s26-flute           Vertical fluted-column striations
+     .s26-zigzag          Lightning / zigzag rule (SVG bg)
+     .s26-speed           Horizontal streamline speed lines
+     .s26-marquee-bulb    Theatre-marquee bulb dot border
+     .s26-rosette         Geometric medallion (SVG bg)
+     .s26-rule-double     Double brass hairline rule
+     .s26-rule-tri        Triple-rule (thick-thin-thick) divider
+     .s26-rule-chevron    Centered chevron-and-rule divider
+
+   All motifs are brass-on-cream by default. Override --s26-motif-color
+   to retint per usage.
+   ========================================================================= */
+
+:root {
+  --s26-motif-color: #8c6932;
+  --s26-motif-color-soft: rgba(140, 105, 50, 0.45);
+}
+
+/* ---- Sunburst — Chrysler-spire radial fan ----
+   16 brass rays emanating from a central point. Use as a large background
+   decoration behind a hero or a small icon-sized accent. */
+.s26-sunburst {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>\
+<g fill='none' stroke='%238c6932' stroke-width='1' stroke-linecap='butt'>\
+<line x1='100' y1='100' x2='100' y2='10'/>\
+<line x1='100' y1='100' x2='128' y2='14'/>\
+<line x1='100' y1='100' x2='154' y2='26'/>\
+<line x1='100' y1='100' x2='176' y2='46'/>\
+<line x1='100' y1='100' x2='190' y2='72'/>\
+<line x1='100' y1='100' x2='190' y2='100'/>\
+<line x1='100' y1='100' x2='190' y2='128'/>\
+<line x1='100' y1='100' x2='176' y2='154'/>\
+<line x1='100' y1='100' x2='154' y2='174'/>\
+<line x1='100' y1='100' x2='128' y2='186'/>\
+<line x1='100' y1='100' x2='100' y2='190'/>\
+<line x1='100' y1='100' x2='72' y2='186'/>\
+<line x1='100' y1='100' x2='46' y2='174'/>\
+<line x1='100' y1='100' x2='24' y2='154'/>\
+<line x1='100' y1='100' x2='10' y2='128'/>\
+<line x1='100' y1='100' x2='10' y2='100'/>\
+<line x1='100' y1='100' x2='10' y2='72'/>\
+<line x1='100' y1='100' x2='24' y2='46'/>\
+<line x1='100' y1='100' x2='46' y2='26'/>\
+<line x1='100' y1='100' x2='72' y2='14'/>\
+<circle cx='100' cy='100' r='6' fill='%238c6932' stroke='none'/>\
+<circle cx='100' cy='100' r='18' stroke-width='0.75'/>\
+</g></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* Half-sunburst (rising-sun) — flat bottom, anchored to the bottom of its
+   container. The Mark's window crown. */
+.s26-sunburst-rising {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100' preserveAspectRatio='xMidYMax meet'>\
+<g fill='none' stroke='%238c6932' stroke-width='1'>\
+<line x1='100' y1='100' x2='100' y2='6'/>\
+<line x1='100' y1='100' x2='118' y2='10'/>\
+<line x1='100' y1='100' x2='138' y2='18'/>\
+<line x1='100' y1='100' x2='158' y2='32'/>\
+<line x1='100' y1='100' x2='176' y2='50'/>\
+<line x1='100' y1='100' x2='192' y2='74'/>\
+<line x1='100' y1='100' x2='82' y2='10'/>\
+<line x1='100' y1='100' x2='62' y2='18'/>\
+<line x1='100' y1='100' x2='42' y2='32'/>\
+<line x1='100' y1='100' x2='24' y2='50'/>\
+<line x1='100' y1='100' x2='8' y2='74'/>\
+<path d='M0 100 L200 100' stroke-width='1'/>\
+</g></svg>");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% auto;
+}
+
+/* ---- Stepped pyramid skyline ----
+   Background-image of two stacked stepped silhouettes — the Flatiron cornice
+   read as setback pyramid. Sits at the top or bottom of a hero. */
+.s26-skyline {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 60' preserveAspectRatio='xMidYMax meet'>\
+<g fill='none' stroke='%238c6932' stroke-width='1' stroke-linejoin='miter'>\
+<path d='M0 60 L0 36 L40 36 L40 24 L80 24 L80 12 L120 12 L120 24 L160 24 L160 36 L200 36 L200 24 L240 24 L240 60 Z'/>\
+<path d='M30 60 L30 48 L60 48 L60 36 L100 36 L100 48 L140 48 L140 36 L180 36 L180 48 L210 48 L210 60' stroke-width='0.75' opacity='0.6'/>\
+</g></svg>");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+/* ---- Fluting — vertical column reeding ----
+   Tight regular vertical lines, like a fluted column shaft. Apply behind
+   panels to suggest a wall of brass columns. */
+.s26-flute {
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent 6px,
+    rgba(140, 105, 50, 0.22) 6px,
+    rgba(140, 105, 50, 0.22) 7px
+  );
+}
+.s26-flute-bold {
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent 11px,
+    rgba(140, 105, 50, 0.38) 11px,
+    rgba(140, 105, 50, 0.38) 12px,
+    transparent 12px,
+    transparent 13px,
+    rgba(140, 105, 50, 0.22) 13px,
+    rgba(140, 105, 50, 0.22) 14px
+  );
+}
+
+/* ---- Zigzag rule — lightning / chevron stripe ----
+   Use as a 16px-tall horizontal divider band. */
+.s26-zigzag {
+  height: 14px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 14' preserveAspectRatio='xMidYMid meet'>\
+<polyline points='0,11 5,3 10,11 15,3 20,11 25,3 30,11 35,3 40,11' fill='none' stroke='%238c6932' stroke-width='1' stroke-linejoin='miter'/></svg>");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+/* ---- Speed lines — streamline horizontal stripes ----
+   Use as a side margin or behind a button to suggest motion / direction. */
+.s26-speed {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(140, 105, 50, 0.40) 0,
+    rgba(140, 105, 50, 0.40) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+}
+
+/* ---- Marquee bulb border ----
+   Dots around the perimeter of an element — theatre marquee. Implement
+   as four backgrounds at the four edges. */
+.s26-marquee-bulb {
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--s26-brass) 1.5px, transparent 2px),
+    radial-gradient(circle at 50% 50%, var(--s26-brass) 1.5px, transparent 2px),
+    radial-gradient(circle at 50% 50%, var(--s26-brass) 1.5px, transparent 2px),
+    radial-gradient(circle at 50% 50%, var(--s26-brass) 1.5px, transparent 2px);
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 14px 4px, 14px 4px, 4px 14px, 4px 14px;
+}
+
+/* ---- Rosette medallion ----
+   A 12-petal geometric flower, scoped tight. Use as a small section accent. */
+.s26-rosette {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>\
+<g fill='none' stroke='%238c6932' stroke-width='1'>\
+<circle cx='32' cy='32' r='4'/>\
+<circle cx='32' cy='32' r='12'/>\
+<circle cx='32' cy='32' r='22'/>\
+<line x1='32' y1='4' x2='32' y2='60'/>\
+<line x1='4' y1='32' x2='60' y2='32'/>\
+<line x1='12' y1='12' x2='52' y2='52'/>\
+<line x1='52' y1='12' x2='12' y2='52'/>\
+<line x1='32' y1='10' x2='32' y2='54' stroke-width='0.5' transform='rotate(30 32 32)'/>\
+<line x1='32' y1='10' x2='32' y2='54' stroke-width='0.5' transform='rotate(60 32 32)'/>\
+<line x1='32' y1='10' x2='32' y2='54' stroke-width='0.5' transform='rotate(120 32 32)'/>\
+<line x1='32' y1='10' x2='32' y2='54' stroke-width='0.5' transform='rotate(150 32 32)'/>\
+</g></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* ---- Egyptian/Aztec geometric band ----
+   Pyramid-step pattern repeated horizontally — a 24px-tall meander band. */
+.s26-meander {
+  height: 18px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 18'>\
+<g fill='none' stroke='%238c6932' stroke-width='1' stroke-linejoin='miter'>\
+<path d='M0 14 L0 4 L20 4 L20 14 L10 14 L10 8 L16 8 L16 14'/>\
+<path d='M30 14 L30 4 L50 4 L50 14 L40 14 L40 8 L46 8 L46 14'/>\
+</g></svg>");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+/* ---- Composite rules / dividers ---- */
+
+.s26-rule-double {
+  height: 5px;
+  background:
+    linear-gradient(to bottom,
+      var(--s26-brass) 0, var(--s26-brass) 1px,
+      transparent 1px, transparent 4px,
+      var(--s26-brass) 4px, var(--s26-brass) 5px);
+}
+
+.s26-rule-tri {
+  height: 7px;
+  background:
+    linear-gradient(to bottom,
+      var(--s26-brass) 0, var(--s26-brass) 2px,
+      transparent 2px, transparent 4px,
+      var(--s26-brass) 4px, var(--s26-brass) 5px,
+      transparent 5px);
+}
+
+.s26-rule-chevron {
+  height: 16px;
+  position: relative;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 16'>\
+<line x1='0' y1='8' x2='180' y2='8' stroke='%238c6932' stroke-width='1'/>\
+<line x1='220' y1='8' x2='400' y2='8' stroke='%238c6932' stroke-width='1'/>\
+<polyline points='188,12 200,4 212,12' fill='none' stroke='%238c6932' stroke-width='1' stroke-linejoin='miter'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+/* ---- Stepped corner brackets (deco) ----
+   Apply via ::before / ::after to any wrapper using .s26-deco-frame.
+   The wrapper gets four pseudo-element corners drawn with SVG. */
+.s26-deco-frame {
+  position: relative;
+  padding: 32px 32px;
+}
+.s26-deco-frame::before,
+.s26-deco-frame::after,
+.s26-deco-frame > .s26-corner-bl,
+.s26-deco-frame > .s26-corner-br {
+  content: '';
+  position: absolute;
+  width: 28px; height: 28px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'>\
+<g fill='none' stroke='%238c6932' stroke-width='1'>\
+<polyline points='0,28 0,18 6,18 6,12 12,12 12,6 18,6 18,0'/>\
+<polyline points='0,12 0,6 6,6 6,0' stroke-width='0.75' opacity='0.7'/>\
+</g></svg>");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.s26-deco-frame::before { top: 6px; left: 6px; }
+.s26-deco-frame::after  { top: 6px; right: 6px; transform: scaleX(-1); }
+.s26-deco-frame > .s26-corner-bl { bottom: 6px; left: 6px;  transform: scaleY(-1); }
+.s26-deco-frame > .s26-corner-br { bottom: 6px; right: 6px; transform: scale(-1, -1); }

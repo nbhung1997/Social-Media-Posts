@@ -1,0 +1,37 @@
+<!doctype html>
+<html data-theme="{{theme}}" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  .stage { gap: 0; }
+  header { flex: 0 0 auto; margin-bottom: 40px; }
+  .pp-monogram { width: 46px; opacity: 0.95; }
+  .plate-wrap { flex: 1 1 auto; min-height: 0; width: 100%; display: flex; }
+  .gilt-frame { width: 100%; }
+  footer {
+    flex: 0 0 auto; margin-top: 44px;
+    display: flex; align-items: center; gap: 26px;
+  }
+  footer .tick { width: 60px; height: 1px; background: var(--atelier-rule); }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bg"></div>
+<main class="stage">
+  <header>
+    <div class="pp-monogram" role="img" aria-label="Private Pattern monogram"></div>
+  </header>
+  <section class="plate-wrap">
+    <div class="gilt-frame"><div class="fillet"><img class="pp-photo" src="{{{photoUrl}}}" alt=""></div></div>
+  </section>
+  <footer>
+    <div class="tick"></div>
+    <span class="pp-pagemark">№ {{index}} / {{count}}</span>
+    <div class="tick"></div>
+  </footer>
+</main>
+<div class="grain"></div>
+</body>
+</html>

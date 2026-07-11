@@ -1,0 +1,252 @@
+/* =========================================================================
+   Private Pattern post engine — shared canvas styles.
+   Implements the Atelier Ledger / Mahogany Smoking Lounge system at
+   1080px-canvas scale. Design tokens come from brand/tokens.css; the
+   evening/morning swap rides on html[data-theme].
+   ========================================================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { width: 100%; height: 100%; }
+
+body.canvas {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--atelier-sans);
+  color: var(--atelier-text-hi);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Substrate ------------------------------------------------------- */
+/* Evening: walnut paneling, amber lamp glow upper-left, quarter-sawn grain. */
+.bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.bg::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 18% 8%, rgba(212, 176, 121, 0.16), transparent 55%),
+    radial-gradient(140% 120% at 50% 115%, rgba(0, 0, 0, 0.55), transparent 60%),
+    linear-gradient(160deg, #241710 0%, #1a1109 45%, #120b07 100%);
+}
+.bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg,
+    transparent 0, transparent 41px,
+    rgba(0, 0, 0, 0.16) 41px, rgba(0, 0, 0, 0.16) 42px);
+  opacity: 0.8;
+}
+html[data-theme='morning'] .bg::before {
+  background:
+    radial-gradient(120% 90% at 20% 0%, rgba(255, 252, 240, 0.75), transparent 60%),
+    linear-gradient(165deg, #faf2d8 0%, #f5edc8 55%, #eee2b8 100%);
+}
+html[data-theme='morning'] .bg::after {
+  background: repeating-linear-gradient(90deg,
+    transparent 0, transparent 41px,
+    rgba(140, 105, 50, 0.05) 41px, rgba(140, 105, 50, 0.05) 42px);
+}
+
+/* ---- Film grain (Noise component, print texture) ---------------------- */
+.grain {
+  position: absolute; inset: 0; z-index: 40; pointer-events: none;
+  mix-blend-mode: overlay; opacity: 0.5;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.72 0 0 0 0 0.59 0 0 0 0 0.42 0 0 0 0.10 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+html[data-theme='morning'] .grain { opacity: 0.35; }
+
+/* ---- Stage ------------------------------------------------------------ */
+.stage {
+  position: relative; z-index: 10;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  padding: var(--pad, 72px);
+}
+
+/* ---- Wordmark — masked logo, engraved: cream fill + 1px brass keyline -- */
+.pp-wordmark {
+  aspect-ratio: 1694 / 962;
+  background: var(--atelier-cream);
+  -webkit-mask-image: var(--logo-url);
+  mask-image: var(--logo-url);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  filter:
+    drop-shadow(1px 0 0 var(--atelier-gold))
+    drop-shadow(-1px 0 0 var(--atelier-gold))
+    drop-shadow(0 1px 0 var(--atelier-gold))
+    drop-shadow(0 -1px 0 var(--atelier-gold))
+    drop-shadow(0 6px 8px rgba(0, 0, 0, 0.5));
+}
+html[data-theme='morning'] .pp-wordmark {
+  background: var(--atelier-ink);
+  filter: drop-shadow(0 2px 3px rgba(40, 26, 14, 0.18));
+}
+.pp-monogram {
+  aspect-ratio: 1 / 1;
+  background: var(--atelier-gold);
+  -webkit-mask-image: var(--monogram-url);
+  mask-image: var(--monogram-url);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
+
+/* ---- Type ------------------------------------------------------------- */
+.pp-eyebrow {
+  font-family: var(--atelier-sans);
+  font-size: 22px; font-weight: 500;
+  letter-spacing: var(--track-caps-xhi);
+  text-transform: uppercase;
+  color: var(--atelier-gold);
+  text-align: center;
+}
+.pp-headline {
+  font-family: var(--atelier-serif);
+  font-weight: 400;
+  font-size: var(--headline-size, 72px);
+  line-height: 1.12;
+  letter-spacing: var(--track-display);
+  color: var(--atelier-text-hi);
+  text-align: center;
+  max-width: 20ch;
+}
+.pp-body {
+  font-family: var(--atelier-sans);
+  font-size: 27px; font-weight: 400;
+  line-height: 1.62;
+  letter-spacing: var(--track-body);
+  color: var(--atelier-text-mid);
+  text-align: center;
+  max-width: 44ch;
+}
+.pp-accent {
+  font-family: var(--atelier-accent);
+  font-size: 64px; line-height: 1;
+  color: var(--atelier-gold-bright);
+  transform: rotate(-2.5deg);
+}
+html[data-theme='morning'] .pp-accent { color: var(--atelier-gold); }
+
+/* Signature heading detail: centered rule with a 48px gold under-bar
+   dropped 3px below the line. */
+.pp-underbar {
+  position: relative;
+  width: 220px; height: 1px;
+  background: var(--atelier-rule);
+}
+.pp-underbar::after {
+  content: ''; position: absolute;
+  left: 50%; top: 3px; transform: translateX(-50%);
+  width: 48px; height: 2px;
+  background: var(--atelier-gold);
+}
+
+/* Ledger numerals / page marks — № 2 / 6 */
+.pp-pagemark {
+  font-family: var(--atelier-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 22px; font-weight: 500;
+  letter-spacing: var(--track-caps-hi);
+  color: var(--atelier-gold);
+}
+
+/* ---- Gilt double-fillet frame ----------------------------------------- */
+/* 1px outer hairline, 4px walnut breathing room, 1px inner inset rule. */
+.gilt-frame {
+  position: relative;
+  border: 1px solid var(--atelier-gold-dim);
+  padding: 5px;
+  background: var(--surface-card, rgba(26, 17, 9, 0.72));
+  box-shadow:
+    inset 0 1px 0 rgba(232, 196, 138, 0.06),
+    0 10px 28px -14px rgba(0, 0, 0, 0.6);
+}
+.gilt-frame > .fillet {
+  position: relative;
+  width: 100%; height: 100%;
+  border: 1px solid var(--atelier-gold-dim);
+  padding: 4px;
+  display: flex;
+}
+html[data-theme='morning'] .gilt-frame {
+  background: #fbf6e3;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 12px 28px -18px rgba(40, 26, 14, 0.35);
+}
+
+.pp-photo {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+
+/* ---- Selvage ribbon ---------------------------------------------------- */
+/* Drape Club loomed edge: wide-tracked caps between gold hairlines. */
+.pp-selvage {
+  width: 100%;
+  border-top: 1px solid var(--atelier-gold-dim);
+  border-bottom: 1px solid var(--atelier-gold-dim);
+  padding: 16px 0 15px;
+  overflow: hidden;
+  display: flex; justify-content: flex-start;
+}
+.pp-selvage span {
+  white-space: nowrap;
+  font-family: var(--atelier-sans);
+  font-size: 18px; font-weight: 500;
+  letter-spacing: var(--track-caps-md);
+  text-transform: uppercase;
+  color: var(--atelier-gold);
+  opacity: 0.9;
+}
+
+/* ---- Deco stepped corner brackets (Summer 2026 skyline frame) ---------- */
+.deco-frame { position: relative; }
+.deco-frame::before, .deco-frame::after,
+.deco-frame > .corner-bl, .deco-frame > .corner-br {
+  content: ''; position: absolute; z-index: 5;
+  width: 44px; height: 44px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><g fill='none' stroke='%238c6932' stroke-width='1'><polyline points='0,28 0,18 6,18 6,12 12,12 12,6 18,6 18,0'/><polyline points='0,12 0,6 6,6 6,0' stroke-width='0.75' opacity='0.7'/></g></svg>");
+  background-repeat: no-repeat; background-size: contain;
+}
+.deco-frame::before { top: -14px; left: -14px; }
+.deco-frame::after { top: -14px; right: -14px; transform: scaleX(-1); }
+.deco-frame > .corner-bl { bottom: -14px; left: -14px; transform: scaleY(-1); }
+.deco-frame > .corner-br { bottom: -14px; right: -14px; transform: scale(-1, -1); }
+
+/* ---- Composite rules --------------------------------------------------- */
+.rule-double {
+  width: 220px; height: 5px;
+  background: linear-gradient(to bottom,
+    var(--atelier-gold) 0, var(--atelier-gold) 1px,
+    transparent 1px, transparent 4px,
+    var(--atelier-gold) 4px, var(--atelier-gold) 5px);
+  opacity: 0.75;
+}
+.pp-ornament {
+  font-family: var(--atelier-serif);
+  font-size: 26px;
+  color: var(--atelier-gold);
+  letter-spacing: 0.5em;
+  text-indent: 0.5em; /* recenter around the tracking */
+}
+
+/* ---- Full-bleed helpers ------------------------------------------------ */
+.bleed-photo {
+  position: absolute; inset: 0; z-index: 1;
+}
+.bleed-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bleed-vignette {
+  position: absolute; inset: 0; z-index: 2;
+  background:
+    linear-gradient(to top, rgba(18, 11, 7, 0.92) 0%, rgba(18, 11, 7, 0.55) 22%, transparent 48%),
+    linear-gradient(to bottom, rgba(18, 11, 7, 0.55) 0%, transparent 18%);
+}
+
+/* ---- Format tuning ------------------------------------------------------ */
+.format-square   { --pad: 72px; --headline-size: 68px; }
+.format-portrait { --pad: 76px; --headline-size: 72px; }
+.format-story    { --pad: 84px; --headline-size: 78px; }
+.format-landscape { --pad: 64px; --headline-size: 62px; }

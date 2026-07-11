@@ -1,0 +1,196 @@
+{
+  "_readme": "Copy bank for the structured-content generator. The voice is a tailor speaking in confidence: low, declarative, slightly arch. Editorial, never marketing-speak. Edit freely — every line here should survive the voice linter (no emoji, no exclamation points, no buzzwords).",
+  "pillars": {
+    "craft": {
+      "label": "Craft",
+      "principle": "Take the making seriously. Quality is never the thing that gets cut.",
+      "eyebrows": [
+        "Fabric Milled in Italy",
+        "The Making",
+        "Atelier Notes",
+        "From the Cutting Table"
+      ],
+      "headlines": [
+        "The Cloth Comes First",
+        "Cut by Hand",
+        "Made, Not Manufactured",
+        "The Hands Behind the Seam",
+        "Seventeen Years at the Bench"
+      ],
+      "hooks": [
+        "The fabric decides most things. We listen to it.",
+        "A garment is a few thousand decisions. We make each one slowly.",
+        "Before it fits you, it passes through hands that have done this for seventeen years.",
+        "Cloth from mills that have earned their names. Work that intends to earn ours."
+      ],
+      "bodies": [
+        "Every piece is cut to a single pattern — yours. The cloth comes from heritage mills; the construction comes from a master tailor who has spent seventeen years learning what to leave out.",
+        "We obsess over fabric, construction, and the hands behind every piece. Quality is never the thing that gets cut.",
+        "Made to measure, by hand, refined with every order. The first fitting is the hardest one you will ever do. Each one after is easier, and closer."
+      ],
+      "signoffs": [
+        "Fabric milled in Italy. Crafted in Vietnam.",
+        "Made to measure. Made to last.",
+        "The making is the point."
+      ],
+      "accents": ["by hand", "the making", "seventeen years"],
+      "hashtags": ["#softtailoring", "#menswearcraft", "#atelier"]
+    },
+    "ease": {
+      "label": "Ease",
+      "principle": "Remove every decision possible. Never make him think hard.",
+      "eyebrows": [
+        "Built-In Ease",
+        "Soft Tailoring",
+        "The Experience",
+        "Nothing to Decide"
+      ],
+      "headlines": [
+        "Nothing to Decide",
+        "Tailoring That Moves",
+        "Room to Live In",
+        "We Decide. You Wear.",
+        "The Easy Kind of Serious"
+      ],
+      "hooks": [
+        "Ease is a tailoring term. It is the room a garment leaves for a life.",
+        "You have enough decisions. The showroom is where they stop.",
+        "Soft shoulders, no lining where none is needed, cloth that moves first."
+      ],
+      "bodies": [
+        "We choose the fabric and handle the fit. You say yes or no. Measurements are saved after the first order, so every piece after is easier and more precise.",
+        "Ease is built into the experience and cut into the cloth — unstructured tailoring that follows the body through an actual day, not a fitting room.",
+        "The clothes are comfortable and easy to wear, and they fit into more than one life: the office, the flight, the long dinner."
+      ],
+      "signoffs": [
+        "Say yes or no. We handle the rest.",
+        "Measured once. Remembered always.",
+        "Serious clothes, worn easily."
+      ],
+      "accents": ["ease", "made to move", "yes or no"],
+      "hashtags": ["#softtailoring", "#madetomove", "#quietmenswear"]
+    },
+    "brotherhood": {
+      "label": "Brotherhood",
+      "principle": "Build for and with the community. Not a customer base — a crew.",
+      "eyebrows": [
+        "By Nomination",
+        "The Crew",
+        "Members' Notes",
+        "Drape Club"
+      ],
+      "headlines": [
+        "Arrive Through Someone You Trust",
+        "The Clothes Are Serious. The People Are Not.",
+        "Built for the Crew",
+        "A Word, Not an Ad",
+        "Nominations"
+      ],
+      "hooks": [
+        "No one finds us by accident. Members arrive through someone they trust.",
+        "A customer base is counted. A crew is known by name.",
+        "The best introduction is still a friend saying: you should meet my tailor."
+      ],
+      "bodies": [
+        "Private Pattern grows by nomination. Each member arrives through someone they trust, which means the room is already full of people worth knowing.",
+        "The brand belongs to the members. Their measurements, their referrals, their standards — we are only the ones holding the chalk.",
+        "The community is self-selected: shared taste, shared standards, no velvet rope theatre. The clothes are serious. The people are not."
+      ],
+      "signoffs": [
+        "By nomination.",
+        "Bring someone worth dressing.",
+        "The room is warm. The door is quiet."
+      ],
+      "accents": ["the crew", "by nomination", "homies"],
+      "hashtags": ["#drapeclub", "#bynomination", "#menswearcommunity"]
+    },
+    "intention": {
+      "label": "Intention",
+      "principle": "Nothing is accidental. If there is no reason for it, it is removed. Tỉ mỉ.",
+      "eyebrows": [
+        "Tỉ Mỉ",
+        "Nothing Accidental",
+        "Every Stitch Considered",
+        "The Reason for Everything"
+      ],
+      "headlines": [
+        "If There Is No Reason, It Is Removed",
+        "Deliberate, Down to the Thread",
+        "Tỉ Mỉ",
+        "Every Choice, Chosen",
+        "Nothing Here by Accident"
+      ],
+      "hooks": [
+        "There is a Vietnamese word for it: tỉ mỉ. Meticulous, patient, exact.",
+        "Every stitch, every fabric, every word is deliberate.",
+        "The quietest luxury is knowing why everything is the way it is."
+      ],
+      "bodies": [
+        "Every choice is made with intention — design, fabric, cut — and made for you. If a detail has no reason to exist, it is removed before it reaches the table.",
+        "Tỉ mỉ is not a slogan; it is a working method. Patient hands, exact seams, decisions that answer to a reason.",
+        "We remove what is accidental until what remains is deliberate. That is the whole aesthetic."
+      ],
+      "signoffs": [
+        "Tỉ mỉ.",
+        "Deliberate, always.",
+        "Everything for a reason."
+      ],
+      "accents": ["tỉ mỉ", "deliberate", "with intention"],
+      "hashtags": ["#timi", "#intentionaldesign", "#quietluxury"]
+    },
+    "heritage": {
+      "label": "Heritage",
+      "principle": "Redefine Made in Vietnam — prove Vietnamese craftsmanship belongs at the top of menswear.",
+      "eyebrows": [
+        "Crafted in Vietnam",
+        "Made in Vietnam",
+        "Two Worlds, One Table",
+        "The Bridge"
+      ],
+      "headlines": [
+        "Redefining Made in Vietnam",
+        "Vietnamese Hands, Italian Cloth",
+        "Craft Has a Home",
+        "Made in Vietnam, Worn Anywhere",
+        "The Top of the Craft"
+      ],
+      "hooks": [
+        "Made in Vietnam is not a disclaimer. Here, it is the headline.",
+        "Italian mills weave the cloth. Vietnamese hands give it a spine.",
+        "Some labels hide where the work is done. We put it on the selvage."
+      ],
+      "bodies": [
+        "Private Pattern exists to prove a point: Vietnamese craftsmanship belongs at the top of menswear, next to the mills whose cloth it cuts.",
+        "The tradition is real — patient hands, exact work, pride in the seam. We built the bridge so the rest of the world could walk across it.",
+        "Every order sends the same message: the words Made in Vietnam can sit inside a jacket that answers to no one."
+      ],
+      "signoffs": [
+        "Crafted in Vietnam. Without apology.",
+        "Fabric milled in Italy. Finished at home.",
+        "The proof is in the seam."
+      ],
+      "accents": ["Việt Nam", "the bridge", "at home"],
+      "hashtags": ["#madeinvietnam", "#vietnamesecraft", "#saigontailoring"]
+    }
+  },
+  "general": {
+    "eyebrows": ["Private Pattern", "The Atelier", "Atelier Notes"],
+    "headlines": ["The Atelier", "Your Pattern", "A Quiet Fitting"],
+    "hooks": ["Elevated casual menswear. Crafted exclusively for our members."],
+    "bodies": [
+      "Custom elevated casual tailoring. Fabric milled in Italy, crafted in Vietnam, cut to a single pattern — yours."
+    ],
+    "signoffs": ["By nomination."],
+    "accents": ["Private Pattern"],
+    "hashtags": []
+  },
+  "carousel": {
+    "closeHeadlines": ["By Nomination Only", "Your Pattern Is Waiting", "Ask the Member Who Sent You"],
+    "closeBodies": [
+      "Membership moves by referral. If you know someone in the crew, you already have a way in.",
+      "One fitting. Every measurement remembered. Each piece after, easier and closer.",
+      "The showroom is quiet, the decisions are few, and the cloth is already chosen."
+    ]
+  },
+  "altTextFallback": "Made-to-measure menswear photographed for Private Pattern — soft tailoring in fabric milled in Italy, crafted in Vietnam."
+}

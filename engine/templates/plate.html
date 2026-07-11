@@ -1,0 +1,44 @@
+<!doctype html>
+<html data-theme="{{theme}}" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  .stage { gap: 0; }
+  header { flex: 0 0 auto; margin-bottom: 36px; }
+  .plate-wrap { flex: 1 1 auto; min-height: 0; width: 100%; display: flex; }
+  .gilt-frame { width: 100%; }
+  .copy {
+    flex: 0 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 24px; margin-top: 46px;
+  }
+  /* Keep the plate dominant: the headline steps down from the display size. */
+  .copy .pp-headline { font-size: calc(var(--headline-size, 72px) * 0.8); }
+  .copy .pp-accent { font-size: 56px; margin-top: -4px; }
+  footer { flex: 0 0 auto; width: 100%; margin-top: 42px; }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bg"></div>
+<main class="stage">
+  <header>
+    <div class="pp-wordmark" style="width: 168px" role="img" aria-label="Private Pattern"></div>
+  </header>
+  <section class="plate-wrap">
+    <div class="gilt-frame"><div class="fillet"><img class="pp-photo" src="{{{photoUrl}}}" alt=""></div></div>
+  </section>
+  <section class="copy">
+    <div class="pp-eyebrow">{{eyebrow}}</div>
+    <h1 class="pp-headline">{{headline}}</h1>
+    <div class="pp-underbar"></div>
+    {{#accent}}<div class="pp-accent">{{accent}}</div>{{/accent}}
+  </section>
+  <footer>
+    <div class="pp-selvage"><span>{{selvage}}</span></div>
+  </footer>
+</main>
+<div class="grain"></div>
+</body>
+</html>

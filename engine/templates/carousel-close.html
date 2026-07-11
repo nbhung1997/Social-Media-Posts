@@ -1,0 +1,33 @@
+<!doctype html>
+<html data-theme="{{theme}}" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  .stage { justify-content: center; gap: 32px; }
+  .pp-headline { max-width: 16ch; }
+  .brandfoot {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 40px; margin-top: 26px; width: 100%;
+  }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bg"></div>
+<main class="stage">
+  <div style="flex: 1 1 0"></div>
+  <div class="pp-ornament">✻</div>
+  <div class="pp-eyebrow">{{eyebrow}}</div>
+  <h1 class="pp-headline">{{headline}}</h1>
+  <div class="pp-underbar"></div>
+  <p class="pp-body">{{body}}</p>
+  <div style="flex: 1 1 0"></div>
+  <footer class="brandfoot">
+    <div class="pp-wordmark" style="width: 178px" role="img" aria-label="Private Pattern"></div>
+    <div class="pp-selvage"><span>{{selvage}}</span></div>
+  </footer>
+</main>
+<div class="grain"></div>
+</body>
+</html>

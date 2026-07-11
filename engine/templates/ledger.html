@@ -1,0 +1,50 @@
+<!doctype html>
+<html data-theme="morning" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  .stage { gap: 0; }
+  .ledger-head {
+    flex: 0 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 18px; margin-bottom: 44px;
+  }
+  .plate-wrap { flex: 1 1 auto; min-height: 0; width: 100%; display: flex; padding: 14px; }
+  .deco-frame { width: 100%; display: flex; }
+  .gilt-frame { width: 100%; }
+  .copy {
+    flex: 0 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 28px; margin-top: 52px;
+  }
+  footer { flex: 0 0 auto; width: 100%; margin-top: 50px; }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bg"></div>
+<main class="stage">
+  <section class="ledger-head">
+    <div class="pp-eyebrow">{{eyebrow}}</div>
+    <div class="pp-pagemark">№ {{ledgerNo}}</div>
+    <div class="rule-double"></div>
+  </section>
+  <section class="plate-wrap">
+    <div class="deco-frame">
+      <div class="corner-bl"></div><div class="corner-br"></div>
+      <div class="gilt-frame"><div class="fillet"><img class="pp-photo" src="{{{photoUrl}}}" alt=""></div></div>
+    </div>
+  </section>
+  <section class="copy">
+    <h1 class="pp-headline">{{headline}}</h1>
+    <div class="pp-underbar"></div>
+    {{#accent}}<div class="pp-accent">{{accent}}</div>{{/accent}}
+  </section>
+  <footer>
+    <div class="pp-selvage"><span>{{selvage}}</span></div>
+  </footer>
+</main>
+<div class="grain"></div>
+</body>
+</html>

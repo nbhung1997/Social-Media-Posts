@@ -1,0 +1,32 @@
+{
+  "name": "Private Pattern",
+  "tagline": "Elevated casual menswear. Crafted exclusively for our members.",
+  "descriptor": "Custom elevated casual tailoring. Fabric milled in Italy, crafted in Vietnam.",
+  "selvage": "Private Pattern ✻ Drape Club · Fabric Milled in Italy ✻ Crafted in Vietnam",
+  "handle": "@privatepattern",
+  "logo": {
+    "mask": "assets/Logo.svg",
+    "stroke": "assets/Logo-stroke.svg",
+    "monogram": "assets/favicon.svg",
+    "aspect": [1694, 962],
+    "monogramAspect": [863, 863]
+  },
+  "formats": {
+    "square": { "width": 1080, "height": 1080, "label": "Feed — Square 1:1" },
+    "portrait": { "width": 1080, "height": 1350, "label": "Feed — Portrait 4:5" },
+    "story": { "width": 1080, "height": 1920, "label": "Story / Reel — 9:16" },
+    "landscape": { "width": 1350, "height": 1080, "label": "Landscape 5:4" }
+  },
+  "themes": {
+    "evening": { "label": "Evening — walnut paneling, parchment text, brass edges" },
+    "morning": { "label": "Morning — parchment paper, walnut ink, deep brass" }
+  },
+  "autoTheme": {
+    "luminanceThreshold": 0.55,
+    "note": "Photos brighter than the threshold compose on morning parchment; darker photos on evening walnut."
+  },
+  "hashtags": {
+    "always": ["#privatepattern", "#madetomeasure", "#craftedinvietnam"],
+    "max": 8
+  }
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html data-theme="evening" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  .stage { z-index: 10; justify-content: space-between; }
+  .fb-copy {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 30px; margin-bottom: 46px;
+  }
+  .fb-copy .pp-headline { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55); }
+  /* Over photography the hairline rule needs more presence than on walnut. */
+  .fb-copy .pp-underbar { background: rgba(184, 151, 106, 0.55); }
+  .fb-copy .pp-underbar::after { background: var(--atelier-gold-bright); }
+  footer { width: 100%; }
+  .pp-selvage { border-color: rgba(184, 151, 106, 0.45); }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bleed-photo"><img src="{{{photoUrl}}}" alt=""></div>
+<div class="bleed-vignette"></div>
+<main class="stage">
+  <header>
+    <div class="pp-wordmark" style="width: 152px" role="img" aria-label="Private Pattern"></div>
+  </header>
+  <div style="flex: 1 1 auto"></div>
+  <section class="fb-copy">
+    <div class="pp-eyebrow">{{eyebrow}}</div>
+    <h1 class="pp-headline">{{headline}}</h1>
+    <div class="pp-underbar"></div>
+  </section>
+  <footer>
+    <div class="pp-selvage"><span>{{selvage}}</span></div>
+  </footer>
+</main>
+<div class="grain"></div>
+</body>
+</html>

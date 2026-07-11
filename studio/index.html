@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en" data-theme="evening">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Private Pattern — Studio</title>
+<link rel="icon" href="/brand/assets/favicon.svg">
+<link rel="stylesheet" href="/brand/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    font-family: var(--atelier-sans);
+    color: var(--atelier-text-hi);
+    background:
+      radial-gradient(120% 90% at 18% 0%, rgba(212, 176, 121, 0.10), transparent 55%),
+      linear-gradient(160deg, #241710 0%, #1a1109 45%, #120b07 100%);
+    background-attachment: fixed;
+    padding-bottom: 96px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 56px 24px 0; }
+
+  header { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-bottom: 44px; }
+  .wordmark {
+    width: 150px; aspect-ratio: 1694 / 962;
+    background: var(--atelier-cream);
+    -webkit-mask: url('/brand/assets/Logo.svg') center / contain no-repeat;
+    mask: url('/brand/assets/Logo.svg') center / contain no-repeat;
+    filter: drop-shadow(1px 0 0 var(--atelier-gold)) drop-shadow(-1px 0 0 var(--atelier-gold))
+            drop-shadow(0 1px 0 var(--atelier-gold)) drop-shadow(0 -1px 0 var(--atelier-gold))
+            drop-shadow(0 4px 5px rgba(0,0,0,0.5));
+  }
+  .eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: var(--track-caps-xhi);
+    text-transform: uppercase; color: var(--atelier-gold);
+  }
+
+  .card {
+    background: var(--surface-card);
+    border: 1px solid var(--atelier-gold-dim);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 28px;
+    margin-bottom: 22px;
+  }
+
+  .drop {
+    border: 1px dashed var(--atelier-gold-dim);
+    border-radius: var(--radius-hair);
+    padding: 44px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 250ms, background 250ms;
+  }
+  .drop:hover, .drop.over { border-color: var(--atelier-gold); background: var(--atelier-gold-soft); }
+  .drop h2 { font-family: var(--atelier-serif); font-weight: 400; font-size: 26px; letter-spacing: 0.04em; }
+  .drop p { margin-top: 10px; font-size: 12.5px; color: var(--atelier-text-mid); }
+  .drop .orn { color: var(--atelier-gold); font-size: 18px; letter-spacing: 0.4em; text-indent: 0.4em; margin-bottom: 10px; }
+
+  .thumbs { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+  .thumb { position: relative; width: 92px; height: 92px; border: 1px solid var(--atelier-gold-dim); padding: 3px; background: rgba(10,5,2,0.45); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb button {
+    position: absolute; top: -9px; right: -9px; width: 20px; height: 20px;
+    border-radius: 50%; border: 1px solid var(--atelier-gold-dim);
+    background: #241710; color: var(--atelier-gold); font-size: 11px; cursor: pointer; line-height: 1;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 20px; }
+  label.field { display: flex; flex-direction: column; gap: 8px; }
+  label.field > span {
+    font-size: 10px; font-weight: 500; letter-spacing: var(--track-caps-hi);
+    text-transform: uppercase; color: var(--atelier-gold);
+  }
+  select, input[type="text"] {
+    font-family: var(--atelier-mono); font-size: 13px;
+    color: var(--atelier-text-hi);
+    background: var(--surface-button);
+    border: none; border-bottom: 1px solid var(--atelier-gold-dim);
+    border-radius: var(--radius-hair) var(--radius-hair) 0 0;
+    padding: 10px 12px; outline: none;
+  }
+  select:focus, input[type="text"]:focus { border-bottom-color: var(--atelier-gold-bright); }
+  select option { background: #241710; }
+
+  .checks { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; padding-top: 6px; }
+  .checks label { display: flex; gap: 7px; align-items: center; font-size: 12.5px; color: var(--atelier-text-mid); cursor: pointer; }
+  .checks input { accent-color: var(--atelier-gold); }
+
+  .actions { display: flex; justify-content: center; margin: 34px 0 10px; }
+  .plaque {
+    position: relative; overflow: hidden;
+    min-width: 230px; height: 56px; padding: 0 26px;
+    font-family: var(--atelier-serif); font-size: 17px; letter-spacing: 0.05em;
+    color: var(--atelier-text-hi);
+    background: radial-gradient(ellipse 80% 100% at 30% 0%, rgba(232,196,138,0.10), transparent 60%), rgba(26,17,9,0.72);
+    border: 1px solid var(--atelier-gold-dim);
+    border-radius: var(--radius-hair);
+    box-shadow: var(--shadow-plaque);
+    cursor: pointer;
+    transition: transform 250ms var(--ease-plaque), box-shadow 250ms;
+  }
+  .plaque:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-plaque), var(--shadow-brass-aura-hi); }
+  .plaque:active:not(:disabled) { transform: translateY(0); }
+  .plaque:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .status { text-align: center; font-size: 12.5px; color: var(--atelier-text-mid); min-height: 20px; margin-bottom: 26px; }
+  .status.err { color: var(--atelier-gold-bright); }
+
+  .results { display: none; }
+  .results.on { display: block; }
+  .results h3 {
+    font-family: var(--atelier-serif); font-weight: 400; font-size: 20px;
+    letter-spacing: 0.04em; text-align: center; margin: 26px 0 4px;
+  }
+  .results .meta { text-align: center; font-size: 11px; letter-spacing: var(--track-caps-md); text-transform: uppercase; color: var(--atelier-gold); margin-bottom: 20px; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+  .shot { border: 1px solid var(--atelier-gold-dim); padding: 4px; background: rgba(10,5,2,0.45); }
+  .shot a { display: block; }
+  .shot img { width: 100%; display: block; }
+  .shot figcaption { font-size: 10.5px; letter-spacing: var(--track-caps-md); text-transform: uppercase; color: var(--atelier-text-low); padding: 8px 4px 4px; text-align: center; }
+
+  .caption-box { margin-top: 22px; }
+  .caption-box pre {
+    white-space: pre-wrap; font-family: var(--atelier-mono); font-size: 13.5px; line-height: 1.7;
+    color: var(--atelier-text-mid); background: rgba(10,5,2,0.45);
+    border: 1px solid var(--atelier-rule-soft); border-radius: var(--radius-hair); padding: 18px;
+  }
+  .caption-box .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .copybtn {
+    font-family: var(--atelier-sans); font-size: 10px; letter-spacing: var(--track-caps-hi); text-transform: uppercase;
+    color: var(--atelier-gold); background: transparent; border: 1px solid var(--atelier-gold-dim);
+    border-radius: var(--radius-hair); padding: 8px 14px; cursor: pointer; transition: all 180ms;
+  }
+  .copybtn:hover { color: var(--atelier-gold-bright); border-color: var(--atelier-gold); background: var(--atelier-gold-soft); }
+
+  .selvage {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 44px;
+    display: flex; align-items: center; overflow: hidden;
+    border-top: 1px solid var(--atelier-rule); border-bottom: 1px solid var(--atelier-rule);
+    background: rgba(18, 11, 7, 0.85); backdrop-filter: blur(4px);
+  }
+  .selvage span {
+    white-space: nowrap; font-size: 10.5px; font-weight: 500;
+    letter-spacing: var(--track-caps-md); text-transform: uppercase; color: var(--atelier-gold);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="wordmark" role="img" aria-label="Private Pattern"></div>
+    <div class="eyebrow">The Post Engine</div>
+  </header>
+
+  <div class="card">
+    <div class="drop" id="drop">
+      <div class="orn">✻</div>
+      <h2>Drop Pictures In</h2>
+      <p>One photo composes a plate. Several compose a carousel. We decide the rest — you say yes or no.</p>
+      <input type="file" id="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <label class="field"><span>Template</span>
+        <select id="template">
+          <option value="auto">Auto — photo decides</option>
+          <option value="plate">Plate — walnut evening</option>
+          <option value="ledger">Ledger — parchment morning</option>
+          <option value="full-bleed">Full Bleed</option>
+          <option value="carousel">Carousel</option>
+          <option value="quote">Quote — no photo</option>
+        </select>
+      </label>
+      <label class="field"><span>Pillar</span>
+        <select id="pillar">
+          <option value="auto">Auto — rotates</option>
+          <option value="craft">Craft</option>
+          <option value="ease">Ease</option>
+          <option value="brotherhood">Brotherhood</option>
+          <option value="intention">Intention</option>
+          <option value="heritage">Heritage</option>
+          <option value="general">General</option>
+        </select>
+      </label>
+      <label class="field"><span>Post Name</span>
+        <input type="text" id="name" placeholder="spring-linen-01">
+      </label>
+      <label class="field"><span>Headline Override</span>
+        <input type="text" id="headline" placeholder="leave blank to compose">
+      </label>
+    </div>
+    <div class="checks" style="margin-top: 22px">
+      <span style="font-size:10px; letter-spacing: var(--track-caps-hi); text-transform: uppercase; color: var(--atelier-gold)">Formats</span>
+      <label><input type="checkbox" name="fmt" value="square" checked> Square 1:1</label>
+      <label><input type="checkbox" name="fmt" value="portrait" checked> Portrait 4:5</label>
+      <label><input type="checkbox" name="fmt" value="story"> Story 9:16</label>
+      <label><input type="checkbox" name="fmt" value="landscape"> Landscape</label>
+      <span style="width:18px"></span>
+      <label><input type="checkbox" id="ai"> Caption with Claude</label>
+      <input type="text" id="brief" placeholder="direction for the tailor (optional)" style="flex:1; min-width: 180px">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="plaque" id="go">Compose the Post</button>
+  </div>
+  <div class="status" id="status"></div>
+
+  <div class="results" id="results">
+    <h3 id="rTitle"></h3>
+    <div class="meta" id="rMeta"></div>
+    <div class="shots" id="shots"></div>
+    <div class="caption-box">
+      <div class="row">
+        <span class="eyebrow">Caption</span>
+        <button class="copybtn" id="copy">Copy</button>
+      </div>
+      <pre id="caption"></pre>
+    </div>
+  </div>
+</div>
+
+<div class="selvage"><span id="selvageText"></span></div>
+
+<script>
+  const state = { photos: [] };
+  const $ = (id) => document.getElementById(id);
+
+  const SELVAGE = 'Private Pattern ✻ Drape Club · Fabric Milled in Italy ✻ Crafted in Vietnam · ';
+  $('selvageText').textContent = SELVAGE.repeat(12);
+
+  const drop = $('drop'), fileInput = $('file'), thumbs = $('thumbs');
+  drop.addEventListener('click', () => fileInput.click());
+  drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+  drop.addEventListener('drop', (e) => {
+    e.preventDefault(); drop.classList.remove('over');
+    addFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+
+  function addFiles(files) {
+    for (const f of files) {
+      if (!/^image\/(jpeg|png|webp)$/.test(f.type)) {
+        setStatus(`"${f.name}" is ${f.type || 'not an image'} — use JPEG, PNG, or WebP.`, true);
+        continue;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        state.photos.push({ name: f.name, dataUrl: reader.result });
+        renderThumbs();
+      };
+      reader.readAsDataURL(f);
+    }
+  }
+
+  function renderThumbs() {
+    thumbs.innerHTML = '';
+    state.photos.forEach((p, i) => {
+      const d = document.createElement('div');
+      d.className = 'thumb';
+      const img = document.createElement('img');
+      img.src = p.dataUrl; img.alt = p.name;
+      const x = document.createElement('button');
+      x.textContent = '×'; x.title = 'Remove';
+      x.addEventListener('click', () => { state.photos.splice(i, 1); renderThumbs(); });
+      d.append(img, x);
+      thumbs.append(d);
+    });
+  }
+
+  $('go').addEventListener('click', async () => {
+    const formats = [...document.querySelectorAll('input[name=fmt]:checked')].map((c) => c.value);
+    const options = {
+      template: $('template').value,
+      pillar: $('pillar').value,
+      name: $('name').value.trim() || undefined,
+      headline: $('headline').value.trim() || undefined,
+      formats,
+      ai: $('ai').checked,
+      brief: $('brief').value.trim() || undefined,
+    };
+    if (state.photos.length === 0 && options.template !== 'quote') {
+      return setStatus('Drop at least one picture in — or choose the quote template.', true);
+    }
+    $('go').disabled = true;
+    setStatus('At the cutting table… composing takes a moment.');
+    $('results').classList.remove('on');
+    try {
+      const res = await fetch('/api/compose', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ photos: state.photos, options }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || res.statusText);
+      showResults(data);
+      setStatus(data.aiNote || '');
+    } catch (err) {
+      setStatus(String(err.message || err), true);
+    } finally {
+      $('go').disabled = false;
+    }
+  });
+
+  function setStatus(msg, isErr) {
+    const s = $('status');
+    s.textContent = msg;
+    s.classList.toggle('err', Boolean(isErr));
+  }
+
+  function showResults(data) {
+    $('rTitle').textContent = data.name;
+    $('rMeta').textContent = `${data.template} · ${data.theme} · ${data.pillar} · ${data.source} · ${data.outDir}`;
+    const shots = $('shots');
+    shots.innerHTML = '';
+    for (const img of data.images) {
+      const fig = document.createElement('figure');
+      fig.className = 'shot';
+      fig.innerHTML = `<a href="${img.url}" download><img src="${img.url}" loading="lazy" alt=""></a><figcaption>${img.format} · ${img.slide}</figcaption>`;
+      shots.append(fig);
+    }
+    $('caption').textContent = data.caption;
+    $('results').classList.add('on');
+  }
+
+  $('copy').addEventListener('click', async () => {
+    await navigator.clipboard.writeText($('caption').textContent);
+    $('copy').textContent = 'Copied.';
+    setTimeout(() => { $('copy').textContent = 'Copy'; }, 1600);
+  });
+</script>
+</body>
+</html>

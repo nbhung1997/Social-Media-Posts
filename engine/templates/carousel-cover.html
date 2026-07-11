@@ -1,0 +1,42 @@
+<!doctype html>
+<html data-theme="evening" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  /* First photo sits far behind a heavy walnut wash; the gilt double fillet
+     frames the whole canvas. */
+  .cover-wash {
+    position: absolute; inset: 0; z-index: 2;
+    background:
+      radial-gradient(120% 90% at 18% 8%, rgba(212, 176, 121, 0.10), transparent 55%),
+      linear-gradient(160deg, rgba(36, 23, 16, 0.90) 0%, rgba(26, 17, 9, 0.88) 45%, rgba(18, 11, 7, 0.93) 100%);
+  }
+  .cover-frame {
+    position: absolute; inset: 34px; z-index: 3;
+    border: 1px solid var(--atelier-gold-dim);
+  }
+  .cover-frame::after {
+    content: ''; position: absolute; inset: 4px;
+    border: 1px solid var(--atelier-gold-dim);
+  }
+  .stage { z-index: 10; justify-content: center; gap: 36px; }
+  .pp-headline { max-width: 16ch; }
+  .cover-mark { position: absolute; z-index: 10; bottom: 72px; left: 0; right: 0; text-align: center; }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bleed-photo"><img src="{{{photoUrl}}}" alt=""></div>
+<div class="cover-wash"></div>
+<div class="cover-frame"></div>
+<main class="stage">
+  <div class="pp-eyebrow">{{eyebrow}}</div>
+  <div class="pp-wordmark" style="width: 300px" role="img" aria-label="Private Pattern"></div>
+  <h1 class="pp-headline">{{headline}}</h1>
+  <div class="pp-underbar"></div>
+</main>
+<div class="cover-mark"><span class="pp-pagemark">№ 1 / {{count}}</span></div>
+<div class="grain"></div>
+</body>
+</html>
