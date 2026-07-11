@@ -27,7 +27,8 @@ Options:
   --template <t>    auto | ${TEMPLATES.join(' | ')}          (default: auto)
   --format <f,f>    square,portrait,story,landscape | all     (default: square,portrait,story)
   --theme <t>       auto | evening | morning                  (default: auto)
-  --logo-pos <p>    mark template: auto | tl | tr | bl | br   (default: auto — quietest corner)
+  --logo-pos <p>    mark template: auto | tl | tr | bl | br | tc | bc  (default: auto)
+  --logo-size <s>   mark template: small | large               (default: small; large = engraved, edge vignette)
   --pillar <p>      auto | ${PILLARS.join(' | ')} | general   (default: auto — rotates)
   --name <slug>     Post name; also seeds the copy rotation   (default: from first photo)
   --headline <s>    Override the headline
@@ -57,6 +58,7 @@ async function main() {
       format: { type: 'string', default: 'square,portrait,story' },
       theme: { type: 'string', default: 'auto' },
       'logo-pos': { type: 'string', default: 'auto' },
+      'logo-size': { type: 'string', default: 'auto' },
       pillar: { type: 'string', default: 'auto' },
       name: { type: 'string' },
       headline: { type: 'string' },
@@ -148,6 +150,7 @@ async function main() {
     template: values.template,
     theme: values.theme,
     logoPos: values['logo-pos'],
+    logoSize: values['logo-size'],
     formats,
     outRoot: values.out ? path.resolve(values.out) : undefined,
     jpeg: values.jpeg,

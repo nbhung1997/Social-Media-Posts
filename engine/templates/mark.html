@@ -23,14 +23,34 @@
     background: var(--atelier-ink);
     filter: drop-shadow(0 1px 8px rgba(255, 255, 255, 0.18));
   }
+  /* Large mark carries the full engraved treatment — cream + brass keyline. */
+  .mark-logo.size-lg { width: 330px; }
+  .mark-logo.size-lg.fill-cream {
+    filter:
+      drop-shadow(1px 0 0 var(--atelier-gold))
+      drop-shadow(-1px 0 0 var(--atelier-gold))
+      drop-shadow(0 1px 0 var(--atelier-gold))
+      drop-shadow(0 -1px 0 var(--atelier-gold))
+      drop-shadow(0 8px 16px rgba(0, 0, 0, 0.55));
+  }
   .mark-logo.pos-tl { top: 56px; left: 56px; }
   .mark-logo.pos-tr { top: 56px; right: 56px; }
   .mark-logo.pos-bl { bottom: 56px; left: 56px; }
   .mark-logo.pos-br { bottom: 56px; right: 56px; }
+  .mark-logo.pos-tc { top: 72px; left: 50%; transform: translateX(-50%); }
+  .mark-logo.pos-bc { bottom: 88px; left: 50%; transform: translateX(-50%); }
+  /* Stories: keep centered placements clear of the platform UI chrome. */
+  .format-story .mark-logo.pos-tc { top: 200px; }
+  .format-story .mark-logo.pos-bc { bottom: 250px; }
+  /* Soft edge wash behind the large mark so it reads over any photo. */
+  .mark-vignette { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+  .mark-vignette.from-b { background: linear-gradient(to top, rgba(18, 11, 7, 0.62) 0%, rgba(18, 11, 7, 0.28) 18%, transparent 38%); }
+  .mark-vignette.from-t { background: linear-gradient(to bottom, rgba(18, 11, 7, 0.62) 0%, rgba(18, 11, 7, 0.28) 18%, transparent 38%); }
 </style>
 </head>
 <body class="canvas {{formatClass}}">
 <div class="mark-photo"><img src="{{{photoUrl}}}" alt=""></div>
-<div class="pp-wordmark mark-logo {{markPos}} {{markFill}}" role="img" aria-label="Private Pattern"></div>
+{{#markVignette}}<div class="mark-vignette {{markVignette}}"></div>{{/markVignette}}
+<div class="pp-wordmark mark-logo {{markPos}} {{markFill}} {{markSize}}" role="img" aria-label="Private Pattern"></div>
 </body>
 </html>

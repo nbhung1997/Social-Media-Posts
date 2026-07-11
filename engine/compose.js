@@ -11,7 +11,8 @@ const {
 
 const SINGLE_TEMPLATES = ['plate', 'full-bleed', 'ledger', 'quote', 'mark'];
 const TEMPLATES = [...SINGLE_TEMPLATES, 'carousel'];
-const LOGO_POSITIONS = ['tl', 'tr', 'bl', 'br'];
+const LOGO_POSITIONS = ['tl', 'tr', 'bl', 'br', 'tc', 'bc'];
+const LOGO_SIZES = ['small', 'large'];
 
 async function launchBrowser() {
   const { chromium } = require('playwright');
@@ -147,22 +148,43 @@ function selvageText(brand) {
 
 // Mark template: drop the wordmark in the quietest corner (lowest texture),
 // bottom corners preferred; cream on dark ground, walnut ink on light.
-function decideMark(probe, logoPos) {
+// Centered placements (tc/bc) are explicit-only. Large marks get the full
+// engraved treatment plus an edge vignette so they read over any photo.
+function decideMark(probe, logoPos, logoSize) {
   let pos = logoPos && logoPos !== 'auto' ? logoPos : null;
   if (pos && !LOGO_POSITIONS.includes(pos)) {
     throw new Error(`Unknown logo position "${pos}". Use one of: ${LOGO_POSITIONS.join(', ')}, auto.`);
   }
+  const size = logoSize && logoSize !== 'auto' ? logoSize : 'small';
+  if (!LOGO_SIZES.includes(size)) {
+    throw new Error(`Unknown logo size "${size}". Use one of: ${LOGO_SIZES.join(', ')}, auto.`);
+  }
   const corners = probe?.corners;
   if (!pos) {
     if (!corners) {
-      pos = 'br';
+      pos = size === 'large' ? 'bc' : 'br';
+    } else if (size === 'large') {
+      // A big mark wants a centered edge — pick the darker/quieter of the two.
+      const edge = (a, b) => (corners[a].mean + corners[b].mean) / 2 + (corners[a].sd + corners[b].sd) / 2;
+      pos = edge('bl', 'br') <= edge('tl', 'tr') ? 'bc' : 'tc';
     } else {
       const score = (k) => corners[k].sd + (k.startsWith('t') ? 0.06 : 0);
-      pos = [...LOGO_POSITIONS].sort((a, b) => score(a) - score(b))[0];
+      pos = ['tl', 'tr', 'bl', 'br'].sort((a, b) => score(a) - score(b))[0];
     }
   }
-  const mean = corners?.[pos]?.mean ?? 0.3;
-  return { markPos: `pos-${pos}`, markFill: mean > 0.62 ? 'fill-ink' : 'fill-cream' };
+  // Centered positions read against both corners of that edge.
+  const mean = pos === 'tc' || pos === 'bc'
+    ? ((corners?.[pos[0] + 'l']?.mean ?? 0.3) + (corners?.[pos[0] + 'r']?.mean ?? 0.3)) / 2
+    : corners?.[pos]?.mean ?? 0.3;
+  // The vignette darkens the edge behind a large mark, so cream keeps working
+  // on brighter grounds than a bare small mark would tolerate.
+  const fill = mean > (size === 'large' ? 0.78 : 0.62) ? 'fill-ink' : 'fill-cream';
+  return {
+    markPos: `pos-${pos}`,
+    markFill: fill,
+    markSize: size === 'large' ? 'size-lg' : '',
+    markVignette: size === 'large' ? (pos.startsWith('t') ? 'from-t' : 'from-b') : '',
+  };
 }
 
 // When a much-taller photo is cover-cropped into a squarer canvas, bias the
@@ -174,11 +196,11 @@ function photoPosition(probe, format) {
   return photoAR < formatAR * 0.8 ? 'center 30%' : 'center';
 }
 
-function templateData({ slide, format, theme, content, brand, name, probes, logoPos }) {
+function templateData({ slide, format, theme, content, brand, name, probes, logoPos, logoSize }) {
   const rng = seededRng(`ledger:${name}`);
   const ledgerNo = String(1 + Math.floor(rng() * 899)).padStart(3, '0');
   const probe = slide.photo ? (probes || []).find((p) => p.file === slide.photo) : null;
-  const mark = slide.template === 'mark' ? decideMark(probe, logoPos) : {};
+  const mark = slide.template === 'mark' ? decideMark(probe, logoPos, logoSize) : {};
   return {
     photoPos: photoPosition(probe, brand.formats[format]),
     ...mark,
@@ -260,7 +282,7 @@ async function createPost(opts) {
       const formatDir = path.join(outDir, format);
       fs.mkdirSync(formatDir, { recursive: true });
       for (const slide of slides) {
-        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos });
+        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos, logoSize: opts.logoSize });
         const tpl = fs.readFileSync(path.join(TEMPLATE_DIR, `${slide.template}.html`), 'utf8');
         const htmlPath = path.join(buildDir, `${format}-${slide.index}.html`);
         fs.writeFileSync(htmlPath, renderTemplate(tpl, data));
