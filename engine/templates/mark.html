@@ -5,27 +5,30 @@
 <link rel="stylesheet" href="{{{tokensUrl}}}">
 <link rel="stylesheet" href="{{{baseCssUrl}}}">
 <style>
-  /* Mark — the quietest treatment: the photograph, and the wordmark, small. */
+  /* Mark — the quietest treatment: the photograph, the wordmark, and at most
+     one wide-tracked micro-label. */
   .mark-photo { position: absolute; inset: 0; }
   .mark-photo img {
     width: 100%; height: 100%; display: block;
     object-fit: cover; object-position: {{photoPos}};
   }
-  .mark-logo {
+  .mark-lockup {
     position: absolute; z-index: 10;
-    width: 124px;
+    display: flex; flex-direction: column; align-items: center; gap: 22px;
   }
-  .mark-logo.fill-cream {
+  .mark-logo { width: 124px; }
+  .mark-lockup.size-lg .mark-logo { width: 330px; }
+  .mark-lockup.size-lg { gap: 30px; }
+  .mark-lockup.fill-cream .mark-logo {
     background: var(--atelier-cream);
     filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.45));
   }
-  .mark-logo.fill-ink {
+  .mark-lockup.fill-ink .mark-logo {
     background: var(--atelier-ink);
     filter: drop-shadow(0 1px 8px rgba(255, 255, 255, 0.18));
   }
   /* Large mark carries the full engraved treatment — cream + brass keyline. */
-  .mark-logo.size-lg { width: 330px; }
-  .mark-logo.size-lg.fill-cream {
+  .mark-lockup.size-lg.fill-cream .mark-logo {
     filter:
       drop-shadow(1px 0 0 var(--atelier-gold))
       drop-shadow(-1px 0 0 var(--atelier-gold))
@@ -33,15 +36,30 @@
       drop-shadow(0 -1px 0 var(--atelier-gold))
       drop-shadow(0 8px 16px rgba(0, 0, 0, 0.55));
   }
-  .mark-logo.pos-tl { top: 56px; left: 56px; }
-  .mark-logo.pos-tr { top: 56px; right: 56px; }
-  .mark-logo.pos-bl { bottom: 56px; left: 56px; }
-  .mark-logo.pos-br { bottom: 56px; right: 56px; }
-  .mark-logo.pos-tc { top: 72px; left: 50%; transform: translateX(-50%); }
-  .mark-logo.pos-bc { bottom: 88px; left: 50%; transform: translateX(-50%); }
+  .mark-label {
+    font-family: var(--atelier-sans);
+    font-size: 15px; font-weight: 500;
+    letter-spacing: var(--track-caps-xhi);
+    text-indent: 0.34em; /* recenter around the tracking */
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--atelier-gold-bright);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+  }
+  .mark-lockup.size-lg .mark-label { font-size: 23px; }
+  .mark-lockup.fill-ink .mark-label {
+    color: var(--atelier-ink);
+    text-shadow: 0 1px 8px rgba(255, 255, 255, 0.25);
+  }
+  .mark-lockup.pos-tl { top: 56px; left: 56px; align-items: flex-start; }
+  .mark-lockup.pos-tr { top: 56px; right: 56px; align-items: flex-end; }
+  .mark-lockup.pos-bl { bottom: 56px; left: 56px; align-items: flex-start; }
+  .mark-lockup.pos-br { bottom: 56px; right: 56px; align-items: flex-end; }
+  .mark-lockup.pos-tc { top: 72px; left: 50%; transform: translateX(-50%); }
+  .mark-lockup.pos-bc { bottom: 88px; left: 50%; transform: translateX(-50%); }
   /* Stories: keep centered placements clear of the platform UI chrome. */
-  .format-story .mark-logo.pos-tc { top: 200px; }
-  .format-story .mark-logo.pos-bc { bottom: 250px; }
+  .format-story .mark-lockup.pos-tc { top: 200px; }
+  .format-story .mark-lockup.pos-bc { bottom: 250px; }
   /* Soft edge wash behind the large mark so it reads over any photo. */
   .mark-vignette { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
   .mark-vignette.from-b { background: linear-gradient(to top, rgba(18, 11, 7, 0.62) 0%, rgba(18, 11, 7, 0.28) 18%, transparent 38%); }
@@ -51,6 +69,9 @@
 <body class="canvas {{formatClass}}">
 <div class="mark-photo"><img src="{{{photoUrl}}}" alt=""></div>
 {{#markVignette}}<div class="mark-vignette {{markVignette}}"></div>{{/markVignette}}
-<div class="pp-wordmark mark-logo {{markPos}} {{markFill}} {{markSize}}" role="img" aria-label="Private Pattern"></div>
+<div class="mark-lockup {{markPos}} {{markFill}} {{markSize}}">
+  <div class="pp-wordmark mark-logo" role="img" aria-label="Private Pattern"></div>
+  {{#markLabel}}<div class="mark-label">{{markLabel}}</div>{{/markLabel}}
+</div>
 </body>
 </html>

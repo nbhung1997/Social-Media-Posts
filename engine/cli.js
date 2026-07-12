@@ -11,7 +11,7 @@ const path = require('path');
 const { parseArgs } = require('node:util');
 const { loadBrand, slugify, collectPhotos } = require('./lib');
 const { generateContent, assembleCaption, PILLARS } = require('./content');
-const { lintContent } = require('./voice');
+const { lintContent, lintCopy } = require('./voice');
 const { createPost, TEMPLATES } = require('./compose');
 
 const HELP = `
@@ -29,6 +29,7 @@ Options:
   --theme <t>       auto | evening | morning                  (default: auto)
   --logo-pos <p>    mark template: auto | tl | tr | bl | br | tc | bc  (default: auto)
   --logo-size <s>   mark template: small | large               (default: small; large = engraved, edge vignette)
+  --label <s>       mark template: micro-label under the logo, e.g. "Live from the Studio"
   --pillar <p>      auto | ${PILLARS.join(' | ')} | general   (default: auto — rotates)
   --name <slug>     Post name; also seeds the copy rotation   (default: from first photo)
   --headline <s>    Override the headline
@@ -59,6 +60,7 @@ async function main() {
       theme: { type: 'string', default: 'auto' },
       'logo-pos': { type: 'string', default: 'auto' },
       'logo-size': { type: 'string', default: 'auto' },
+      label: { type: 'string' },
       pillar: { type: 'string', default: 'auto' },
       name: { type: 'string' },
       headline: { type: 'string' },
@@ -137,7 +139,7 @@ async function main() {
     content = generateContent({ name, pillar: values.pillar, photoCount: photos.length, overrides });
   }
 
-  for (const v of content.lint || []) {
+  for (const v of [...(content.lint || []), ...(values.label ? lintCopy(values.label, { context: 'label' }) : [])]) {
     const tag = v.severity === 'warn' ? 'voice note' : 'voice lint';
     console.warn(`· ${tag} [${v.context}] ${v.detail}`);
   }
@@ -151,6 +153,7 @@ async function main() {
     theme: values.theme,
     logoPos: values['logo-pos'],
     logoSize: values['logo-size'],
+    label: values.label,
     formats,
     outRoot: values.out ? path.resolve(values.out) : undefined,
     jpeg: values.jpeg,

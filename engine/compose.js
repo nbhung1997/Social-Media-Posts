@@ -196,7 +196,7 @@ function photoPosition(probe, format) {
   return photoAR < formatAR * 0.8 ? 'center 30%' : 'center';
 }
 
-function templateData({ slide, format, theme, content, brand, name, probes, logoPos, logoSize }) {
+function templateData({ slide, format, theme, content, brand, name, probes, logoPos, logoSize, label }) {
   const rng = seededRng(`ledger:${name}`);
   const ledgerNo = String(1 + Math.floor(rng() * 899)).padStart(3, '0');
   const probe = slide.photo ? (probes || []).find((p) => p.file === slide.photo) : null;
@@ -204,6 +204,7 @@ function templateData({ slide, format, theme, content, brand, name, probes, logo
   return {
     photoPos: photoPosition(probe, brand.formats[format]),
     ...mark,
+    markLabel: slide.template === 'mark' ? (label || '') : '',
     theme,
     formatClass: `format-${format}`,
     tokensUrl: fileUrl(path.join(BRAND_DIR, 'tokens.css')),
@@ -282,7 +283,7 @@ async function createPost(opts) {
       const formatDir = path.join(outDir, format);
       fs.mkdirSync(formatDir, { recursive: true });
       for (const slide of slides) {
-        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos, logoSize: opts.logoSize });
+        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos, logoSize: opts.logoSize, label: opts.label });
         const tpl = fs.readFileSync(path.join(TEMPLATE_DIR, `${slide.template}.html`), 'utf8');
         const htmlPath = path.join(buildDir, `${format}-${slide.index}.html`);
         fs.writeFileSync(htmlPath, renderTemplate(tpl, data));
