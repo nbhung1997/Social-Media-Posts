@@ -6,11 +6,11 @@ const fs = require('fs');
 const path = require('path');
 const {
   ROOT, BRAND_DIR, TEMPLATE_DIR,
-  loadBrand, renderTemplate, fileUrl, seededRng,
+  loadBrand, renderTemplate, fileUrl, seededRng, escapeHtml,
 } = require('./lib');
 
 const SINGLE_TEMPLATES = ['plate', 'full-bleed', 'ledger', 'quote', 'mark'];
-const TEMPLATES = [...SINGLE_TEMPLATES, 'carousel'];
+const TEMPLATES = [...SINGLE_TEMPLATES, 'carousel', 'reel'];
 const LOGO_POSITIONS = ['tl', 'tr', 'bl', 'br', 'tc', 'bc'];
 const LOGO_SIZES = ['small', 'large'];
 
@@ -117,6 +117,13 @@ function decideTheme({ theme, template }) {
 // Expand a post into its slides. Single templates yield one slide; carousel
 // yields cover + one page per photo + closing card.
 function buildSlides({ template, photos, content }) {
+  if (template === 'reel') {
+    // One slide, several photos stacked as film frames.
+    if (photos.length < 2 || photos.length > 4) {
+      throw new Error(`The reel template stacks 2-4 photos; you passed ${photos.length}.`);
+    }
+    return [{ kind: 'reel', template: 'reel', photo: null, photos, index: 1, count: 1 }];
+  }
   if (template !== 'carousel') {
     if (template === 'quote' && photos.length > 0) {
       throw new Error('The quote template is text-only — drop the photos or pick another template.');
@@ -201,10 +208,15 @@ function templateData({ slide, format, theme, content, brand, name, probes, logo
   const ledgerNo = String(1 + Math.floor(rng() * 899)).padStart(3, '0');
   const probe = slide.photo ? (probes || []).find((p) => p.file === slide.photo) : null;
   const mark = slide.template === 'mark' ? decideMark(probe, logoPos, logoSize) : {};
+  const reelFrames = (slide.photos || [])
+    .map((p) => `<div class="reel-frame"><img src="${escapeHtml(fileUrl(p))}" alt=""></div>`)
+    .join('<div class="reel-seam"></div>');
   return {
     photoPos: photoPosition(probe, brand.formats[format]),
     ...mark,
-    markLabel: slide.template === 'mark' ? (label || '') : '',
+    markLabel: ['mark', 'reel'].includes(slide.template) ? (label || '') : '',
+    reelFrames,
+    reelLast: String((slide.photos || []).length).padStart(2, '0'),
     theme,
     formatClass: `format-${format}`,
     tokensUrl: fileUrl(path.join(BRAND_DIR, 'tokens.css')),

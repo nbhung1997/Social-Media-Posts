@@ -1,0 +1,89 @@
+<!doctype html>
+<html data-theme="evening" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  /* Reel — a strip of film laid on the walnut table: stacked frames between
+     sprocket rails, edge codes in ledger type, the label stamped across. */
+  .stage { justify-content: center; gap: 44px; }
+
+  .reel-wrap { position: relative; display: flex; justify-content: center; }
+  .reel {
+    position: relative;
+    width: 73%;
+    background: #0b0705;
+    border-radius: 4px;
+    padding: 0 58px;
+    box-shadow:
+      inset 0 1px 0 rgba(232, 196, 138, 0.05),
+      0 34px 90px -30px rgba(0, 0, 0, 0.85),
+      0 8px 24px -10px rgba(0, 0, 0, 0.6);
+    transform: rotate(-1.6deg);
+  }
+  /* Sprocket rails — punched holes running down both edges. */
+  .reel::before, .reel::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 58px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='58' height='56'><rect x='14' y='17' width='30' height='22' rx='5' fill='%23201409'/></svg>");
+    background-repeat: repeat-y;
+    background-position: center;
+  }
+  .reel::before { left: 0; }
+  .reel::after { right: 0; }
+
+  .reel-leader {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 6px;
+  }
+  .reel-leader span {
+    font-family: var(--atelier-sans);
+    font-size: 13px; font-weight: 500;
+    letter-spacing: var(--track-caps-md);
+    text-transform: uppercase;
+    color: rgba(184, 151, 106, 0.75);
+    white-space: nowrap;
+  }
+  .reel-frame { position: relative; }
+  .reel-frame img {
+    display: block; width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .reel-seam { height: 92px; }
+
+  /* The label stamps straight across the tilted strip. */
+  .reel-label {
+    position: absolute; z-index: 20;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-family: var(--atelier-sans);
+    font-size: 26px; font-weight: 500;
+    letter-spacing: var(--track-caps-xhi);
+    text-indent: 0.34em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--atelier-cream);
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+  header { display: flex; justify-content: center; }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bg"></div>
+<main class="stage">
+  <header>
+    <div class="pp-wordmark" style="width: 218px" role="img" aria-label="Private Pattern"></div>
+  </header>
+  <div class="reel-wrap">
+    <div class="reel">
+      <div class="reel-leader"><span>Private Pattern ✻ 120</span><span>№ 01</span></div>
+      {{{reelFrames}}}
+      <div class="reel-leader"><span>Crafted in Vietnam</span><span>№ {{reelLast}}</span></div>
+    </div>
+    {{#markLabel}}<div class="reel-label">{{markLabel}}</div>{{/markLabel}}
+  </div>
+</main>
+<div class="grain"></div>
+</body>
+</html>
