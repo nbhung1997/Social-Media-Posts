@@ -112,6 +112,24 @@ samples/    synthetic stand-in photography for demos/tests
 scripts/    make-samples.js · smoke-test.js  (npm run samples / npm test)
 ```
 
+## Airtable — fabrics, products, collections
+
+The brand's Airtable base is the image + copy source for data-driven posts.
+The connection map lives in [`brand/airtable.json`](brand/airtable.json)
+(base/table/field IDs, image fields, caveats). Sync imagery locally with:
+
+```bash
+AIRTABLE_API_KEY=pat… node scripts/pull-airtable.js all --limit 50
+# → drops/airtable/<table>/<slug>.jpg + drops/airtable/manifest.json
+node engine/cli.js create drops/airtable/fabrics/sage-green-pure-linen-suiting.jpg --pillar craft
+```
+
+Highlights: `FABRICS` (235 cloths — closeups + mill-story copy), `PRODUCTS`
+(263 — Cloudinary product shots), `COLLECTIONS`/`SEGMENTS`/`ITEMS` (editorial
+drops like *Back To Work* with hero/intro/lifestyle photography). Customer
+tables are off-limits for social content; run all Airtable copy through the
+voice linter rather than pasting verbatim.
+
 ## Tests
 
 ```bash

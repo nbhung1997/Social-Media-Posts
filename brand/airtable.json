@@ -1,0 +1,63 @@
+{
+  "_readme": "Connection map for the Private Pattern Airtable base — the engine's source of product/fabric imagery and copy. Explored 2026-07-12 via the Airtable MCP. Field names below are the exact Airtable field names (safe to pass to the API as fields[]). Use scripts/pull-airtable.js to sync images + copy into drops/airtable/.",
+  "baseId": "appJRDfAZg8yBtvKx",
+  "baseName": "Private Pattern",
+  "tables": {
+    "fabrics": {
+      "id": "tbl4Jvg4lbcrjaAvg",
+      "name": "FABRICS",
+      "recordCount": 235,
+      "image": "Fabric Closeup URL",
+      "copy": ["Fabric Code", "Fabric Description", "Fabric Category", "Color", "Fabric Story", "Composition", "GSM", "Mill Name", "Mill Collection", "Yarn Count/Finesse"],
+      "notes": "Fabric Story is ready-made caption material (mill history + hand/drape language). Closeups are mostly Cloudinary or supplier-store URLs. Data quality: a few records hold a pasted Airtable cell link instead of an image URL (e.g. fabric 3045.200/54) — the puller skips non-image URLs."
+    },
+    "products": {
+      "id": "tbltaIfWAIrOLvdS0",
+      "name": "PRODUCTS",
+      "recordCount": 263,
+      "image": "Product Image URL",
+      "copy": ["Product Name", "Fabric Variant", "Price", "Product Description", "Delivery Timing"],
+      "notes": "Product Unique ID (primary) = name + fabric variant + cost. Images are Cloudinary product shots. FABRICS link gives the cloth behind each product."
+    },
+    "collections": {
+      "id": "tblACWPOGMWlKHlps",
+      "name": "COLLECTIONS",
+      "recordCount": 1,
+      "image": "Hero Image URL",
+      "copy": ["Name", "Slug", "Season", "Status", "Hero Eyebrow", "Hero Title", "Hero Subhead"],
+      "notes": "Editorial drops. Currently: 'Back To Work' (back-to-work, Summer 2026 · Drop I, published, subhead 'Daddy's back… to the office'). CAUTION: some image URLs are storefront-relative paths (/collections/cover.jpg) — they live on the storefront deployment, not Cloudinary; ask for the storefront domain before pulling those."
+    },
+    "collectionSegments": {
+      "id": "tblphkWmtIKzdmdgJ",
+      "name": "COLLECTION_SEGMENTS",
+      "recordCount": 4,
+      "image": "Intro Image URL",
+      "copy": ["Name", "Numeral", "Eyebrow", "Story", "About Rows", "Sort Order"],
+      "notes": "Back To Work segments: I 'Tropical' Wool · II Hopsack · III Shirt Fabrics · IV Cotton Trousers. Story = one-line cloth story; About Rows = 'Label :: Value' spec lines — both drop straight into captions and ledger cards."
+    },
+    "collectionItems": {
+      "id": "tblG04jg4sN8BgtMj",
+      "name": "COLLECTION_ITEMS",
+      "recordCount": 16,
+      "image": "Lifestyle Image URL",
+      "copy": ["Name", "Colourway", "Meta", "Spec Line", "Sheet Note", "In Reel"],
+      "notes": "Purchasable pieces per drop; In Reel items carry lifestyle photography. Sheet Note is a one-line editorial reason — good hook material."
+    },
+    "customerFits": {
+      "id": "tblLbgSXfgE3R7p3R",
+      "name": "CUSTOMER_FITS",
+      "image": "Fit Images",
+      "copy": ["Fit Title", "Caption", "Season", "Palette"],
+      "notes": "Comma-separated Cloudinary URLs of customers wearing pieces. CAUTION: customer likenesses — get explicit approval before using any fit in public social posts."
+    },
+    "templates": {
+      "id": "tblRURygXSrnU5Csx",
+      "name": "TEMPLATES",
+      "image": "Sketch URL",
+      "copy": ["Template Name", "Design Notes", "Category"],
+      "notes": "Garment technical sketches — potential quote/ledger card artwork."
+    }
+  },
+  "offLimits": "CUSTOMERS, ORDERS, Finance Ledger, TDC_MEMBERS, and the showroom/cart tables hold private member and business data — never source social content from them.",
+  "voiceCaution": "Airtable copy is informational, not always on-voice ('premium', 'sophisticated' pass the linter but read like catalog copy) — run everything through generateContent overrides + the voice linter rather than pasting verbatim."
+}
