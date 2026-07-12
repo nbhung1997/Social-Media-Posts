@@ -121,13 +121,11 @@ html[data-theme='morning'] .pp-wordmark {
   text-align: center;
   max-width: 44ch;
 }
-/* Accent line — quiet upright serif subline (the latest type direction
-   retired the script face; roman only, never italic). */
 .pp-accent {
   font-family: var(--atelier-accent);
-  font-size: 34px; line-height: 1;
-  letter-spacing: 0.04em;
+  font-size: 64px; line-height: 1;
   color: var(--atelier-gold-bright);
+  transform: rotate(-2.5deg);
 }
 html[data-theme='morning'] .pp-accent { color: var(--atelier-gold); }
 

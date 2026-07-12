@@ -51,11 +51,10 @@ Editorial, never marketing-speak. Reads like a calling card, not a CTA.
   Morning theme is parchment `#f5edc8` with walnut ink `#281a0e`.
 - **Accent** — aged brass only: `#b8976a`, bright `#d4b079`, deep `#8c6932`.
   No semantic colors. Pure white never; cream `#f0e4c9` stands in for ivory.
-- **Type (latest direction)** — Instrument Serif, upright and never italic,
-  for headings and titles (Title Case, set tight). Instrument Sans for body,
-  micro-labels, and ledger numerals; signage moments are Instrument Sans in
-  tracked caps. No body in all caps. The earlier Copperplate / JetBrains
-  Mono / Emily Austin stack is retired.
+- **Type** — Copperplate for every heading (engraved caps, tracked positive).
+  JetBrains Mono for body, micro-labels, ledger numerals. Emily Austin script
+  only for accents/flourishes — never body, never labels. (The Instrument
+  Serif/Sans stack from the older marketing site is retired.)
 - **Logo** — masked SVG filled cream with a 1px brass keyline (engraved
   treatment). Monogram (favicon mark) for small placements.
 - **Frames** — gilt double-fillet: 1px outer hairline, 4px breathing room,
