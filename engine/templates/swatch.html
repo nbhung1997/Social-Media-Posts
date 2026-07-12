@@ -7,11 +7,6 @@
 <style>
   /* Swatch card — a pinked cutting of cloth laid on a paper card:
      serif title, mill line, the swatch, catalog copy, ink wordmark. */
-  @font-face {
-    font-family: 'Instrument Serif';
-    src: url('{{{fontsUrl}}}/InstrumentSerif-Regular.ttf') format('truetype');
-    font-weight: 400; font-style: normal;
-  }
 
   /* Paper, not parchment: cool cream with visible tooth. Scoped to beat the
      theme's substrate selector. */
@@ -32,7 +27,7 @@
   .stage { justify-content: center; gap: 0; text-align: center; }
 
   .swatch-title {
-    font-family: 'Instrument Serif', Georgia, serif;
+    font-family: var(--atelier-serif);
     font-weight: 400;
     font-size: var(--swatch-title, 70px);
     line-height: 1.05;
@@ -41,7 +36,7 @@
     max-width: 18ch;
   }
   .swatch-mill {
-    font-family: 'Geist', var(--atelier-sans);
+    font-family: var(--atelier-sans);
     font-weight: 600;
     font-size: 27px;
     letter-spacing: 0.12em;
@@ -64,7 +59,7 @@
     background-position: center var(--swatch-y, 30%);
   }
   .swatch-copy {
-    font-family: 'Geist', var(--atelier-sans);
+    font-family: var(--atelier-sans);
     font-weight: 450;
     font-size: 24px;
     line-height: 1.56;

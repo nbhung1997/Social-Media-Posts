@@ -315,3 +315,34 @@ html[data-theme='morning'] {
   letter-spacing: 0.01em;
   color: var(--atelier-gold-bright);
 }
+
+/* =========================================================================
+   LATEST TYPOGRAPHY — Summer 2026 direction (supersedes the stack above).
+   Per the design system: Instrument Serif (upright, never italic) for
+   headings and titles; Instrument Sans for body, labels, and small-caps
+   signage. Title Case for ordinary headings; no body in all caps.
+   The legacy Copperplate / JetBrains Mono / Emily Austin faces remain in
+   fonts/ but are no longer referenced.
+   ========================================================================= */
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('fonts/InstrumentSerif-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('fonts/InstrumentSans-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root {
+  --atelier-serif: 'Instrument Serif', 'Big Caslon', Georgia, serif;
+  --atelier-sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+  --atelier-mono: 'Instrument Sans', ui-monospace, 'SF Mono', Menlo, monospace;
+  --atelier-accent: 'Instrument Serif', Georgia, serif;
+  /* Instrument Serif sets tight — the engraved-caps tracking no longer applies. */
+  --track-display: 0.005em;
+  --track-tight: 0.01em;
+}
