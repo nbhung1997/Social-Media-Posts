@@ -9,7 +9,7 @@ const {
   loadBrand, renderTemplate, fileUrl, seededRng, escapeHtml,
 } = require('./lib');
 
-const SINGLE_TEMPLATES = ['plate', 'full-bleed', 'ledger', 'quote', 'mark'];
+const SINGLE_TEMPLATES = ['plate', 'full-bleed', 'ledger', 'quote', 'mark', 'swatch'];
 const TEMPLATES = [...SINGLE_TEMPLATES, 'carousel', 'reel'];
 const LOGO_POSITIONS = ['tl', 'tr', 'bl', 'br', 'tc', 'bc'];
 const LOGO_SIZES = ['small', 'large'];
@@ -194,6 +194,18 @@ function decideMark(probe, logoPos, logoSize) {
   };
 }
 
+// Zigzag polygon tracing a pinking-shears cut around the swatch edge.
+function pinkedClipPath(teeth = 26, depth = 2.1) {
+  const pts = [];
+  const step = 100 / teeth;
+  const f = (n) => Number(n.toFixed(2));
+  for (let i = 0; i < teeth; i++) pts.push(`${f(i * step)}% ${depth}%`, `${f(i * step + step / 2)}% 0%`);
+  for (let i = 0; i < teeth; i++) pts.push(`${100 - depth}% ${f(i * step)}%`, `100% ${f(i * step + step / 2)}%`);
+  for (let i = 0; i < teeth; i++) pts.push(`${f(100 - i * step)}% ${100 - depth}%`, `${f(100 - i * step - step / 2)}% 100%`);
+  for (let i = 0; i < teeth; i++) pts.push(`${depth}% ${f(100 - i * step)}%`, `0% ${f(100 - i * step - step / 2)}%`);
+  return pts.join(', ');
+}
+
 // When a much-taller photo is cover-cropped into a squarer canvas, bias the
 // visible window toward the upper third, where the subject usually is.
 function photoPosition(probe, format) {
@@ -203,7 +215,7 @@ function photoPosition(probe, format) {
   return photoAR < formatAR * 0.8 ? 'center 30%' : 'center';
 }
 
-function templateData({ slide, format, theme, content, brand, name, probes, logoPos, logoSize, label }) {
+function templateData({ slide, format, theme, content, brand, name, probes, logoPos, logoSize, label, swatch }) {
   const rng = seededRng(`ledger:${name}`);
   const ledgerNo = String(1 + Math.floor(rng() * 899)).padStart(3, '0');
   const probe = slide.photo ? (probes || []).find((p) => p.file === slide.photo) : null;
@@ -220,6 +232,12 @@ function templateData({ slide, format, theme, content, brand, name, probes, logo
     theme,
     formatClass: `format-${format}`,
     tokensUrl: fileUrl(path.join(BRAND_DIR, 'tokens.css')),
+    fontsUrl: fileUrl(path.join(BRAND_DIR, 'fonts')),
+    swatchClip: slide.template === 'swatch' ? pinkedClipPath() : '',
+    // Optional crop tuning for the swatch window: { zoom: '200%', y: '10%' }.
+    swatchStyle: slide.template === 'swatch' && swatch
+      ? [swatch.zoom ? `--swatch-zoom:${swatch.zoom}` : '', swatch.y ? `--swatch-y:${swatch.y}` : ''].filter(Boolean).join(';')
+      : '',
     baseCssUrl: fileUrl(path.join(TEMPLATE_DIR, 'base.css')),
     logoUrl: fileUrl(path.join(BRAND_DIR, brand.logo.mask)),
     monogramUrl: fileUrl(path.join(BRAND_DIR, brand.logo.monogram)),
@@ -230,6 +248,7 @@ function templateData({ slide, format, theme, content, brand, name, probes, logo
     accent: content.accent,
     body: slide.template === 'carousel-close' ? content.closeBody
       : slide.template === 'quote' ? content.hook
+      : slide.template === 'swatch' ? content.body
       : '',
     index: slide.index,
     count: slide.count,
@@ -295,7 +314,7 @@ async function createPost(opts) {
       const formatDir = path.join(outDir, format);
       fs.mkdirSync(formatDir, { recursive: true });
       for (const slide of slides) {
-        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos, logoSize: opts.logoSize, label: opts.label });
+        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos, logoSize: opts.logoSize, label: opts.label, swatch: opts.swatch });
         const tpl = fs.readFileSync(path.join(TEMPLATE_DIR, `${slide.template}.html`), 'utf8');
         const htmlPath = path.join(buildDir, `${format}-${slide.index}.html`);
         fs.writeFileSync(htmlPath, renderTemplate(tpl, data));

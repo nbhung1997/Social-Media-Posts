@@ -1,0 +1,106 @@
+<!doctype html>
+<html data-theme="morning" style="--logo-url:url('{{{logoUrl}}}'); --monogram-url:url('{{{monogramUrl}}}')">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{{tokensUrl}}}">
+<link rel="stylesheet" href="{{{baseCssUrl}}}">
+<style>
+  /* Swatch card — a pinked cutting of cloth laid on a paper card:
+     serif title, mill line, the swatch, catalog copy, ink wordmark. */
+  @font-face {
+    font-family: 'Instrument Serif';
+    src: url('{{{fontsUrl}}}/InstrumentSerif-Regular.ttf') format('truetype');
+    font-weight: 400; font-style: normal;
+  }
+
+  /* Paper, not parchment: cool cream with visible tooth. Scoped to beat the
+     theme's substrate selector. */
+  html[data-theme='morning'] .bg::before {
+    background:
+      radial-gradient(130% 100% at 50% 0%, rgba(255, 255, 252, 0.55), transparent 60%),
+      radial-gradient(160% 130% at 50% 115%, rgba(120, 100, 70, 0.14), transparent 60%),
+      linear-gradient(170deg, #f4efe2 0%, #f1ebdc 55%, #ebe4d2 100%);
+  }
+  html[data-theme='morning'] .bg::after {
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='p1'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.28 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p1)'/></svg>"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'><filter id='p2'><feTurbulence type='fractalNoise' baseFrequency='0.04 0.05' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 0.99 0 0 0 0 0.94 0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p2)'/></svg>");
+    opacity: 1;
+  }
+  .grain { opacity: 0.22; }
+
+  .stage { justify-content: center; gap: 0; text-align: center; }
+
+  .swatch-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: var(--swatch-title, 70px);
+    line-height: 1.05;
+    letter-spacing: 0.005em;
+    color: #221808;
+    max-width: 18ch;
+  }
+  .swatch-mill {
+    font-family: 'Geist', var(--atelier-sans);
+    font-weight: 600;
+    font-size: 27px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #241a0c;
+    margin-top: 22px;
+  }
+  .swatch-shadow {
+    margin-top: 46px;
+    filter:
+      drop-shadow(0 18px 30px rgba(70, 52, 28, 0.30))
+      drop-shadow(0 4px 10px rgba(70, 52, 28, 0.22));
+  }
+  .swatch-clip {
+    width: var(--swatch-size, 560px);
+    aspect-ratio: 1 / 1.02;
+    clip-path: polygon({{{swatchClip}}});
+    background-image: url('{{{photoUrl}}}');
+    background-size: var(--swatch-zoom, 175%) auto;
+    background-position: center var(--swatch-y, 30%);
+  }
+  .swatch-copy {
+    font-family: 'Geist', var(--atelier-sans);
+    font-weight: 450;
+    font-size: 24px;
+    line-height: 1.56;
+    letter-spacing: 0.002em;
+    color: #2c2214;
+    max-width: 830px;
+    margin-top: 46px;
+  }
+  .swatch-logo {
+    width: 320px;
+    aspect-ratio: 1694 / 962;
+    margin-top: 46px;
+    background: #1d1408;
+    -webkit-mask: var(--logo-url) center / contain no-repeat;
+    mask: var(--logo-url) center / contain no-repeat;
+  }
+
+  .format-square   { --swatch-title: 58px; --swatch-size: 440px; }
+  .format-square .swatch-copy { font-size: 22px; margin-top: 36px; max-width: 800px; }
+  .format-square .swatch-shadow { margin-top: 34px; }
+  .format-square .swatch-logo { width: 270px; margin-top: 34px; }
+  .format-story    { --swatch-title: 80px; --swatch-size: 680px; }
+  .format-story .swatch-copy { font-size: 27px; max-width: 880px; margin-top: 56px; }
+  .format-story .swatch-shadow { margin-top: 56px; }
+  .format-story .swatch-logo { width: 380px; margin-top: 56px; }
+</style>
+</head>
+<body class="canvas {{formatClass}}">
+<div class="bg"></div>
+<main class="stage">
+  <h1 class="swatch-title">{{headline}}</h1>
+  <div class="swatch-mill">{{eyebrow}}</div>
+  <div class="swatch-shadow"><div class="swatch-clip" role="img" aria-label="Fabric swatch" style="{{swatchStyle}}"></div></div>
+  <p class="swatch-copy">{{body}}</p>
+  <div class="swatch-logo" role="img" aria-label="Private Pattern"></div>
+</main>
+<div class="grain"></div>
+</body>
+</html>
