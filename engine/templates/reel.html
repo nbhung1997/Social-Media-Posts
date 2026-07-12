@@ -9,10 +9,30 @@
      sprocket rails, edge codes in ledger type, the label stamped across. */
   .stage { justify-content: center; gap: 44px; }
 
+  /* The tabletop itself: lamplit wooden boards with visible grain. */
+  .bg::before {
+    background:
+      radial-gradient(115% 85% at 26% 6%, rgba(236, 192, 126, 0.32), transparent 58%),
+      radial-gradient(150% 120% at 50% 118%, rgba(10, 5, 2, 0.62), transparent 62%),
+      linear-gradient(162deg, #59402a 0%, #4a3320 42%, #33220f 100%);
+  }
+  .bg::after {
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='wood'><feTurbulence type='fractalNoise' baseFrequency='0.11 0.008' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.12 0 0 0 0 0.07 0 0 0 0 0.03 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23wood)'/></svg>"),
+      repeating-linear-gradient(90deg,
+        rgba(255, 224, 176, 0.06) 0, rgba(255, 224, 176, 0.06) 2px,
+        transparent 2px, transparent 214px,
+        rgba(0, 0, 0, 0.42) 214px, rgba(0, 0, 0, 0.42) 217px),
+      repeating-linear-gradient(90deg,
+        rgba(0, 0, 0, 0.10) 0, rgba(0, 0, 0, 0.10) 108px,
+        transparent 108px, transparent 217px);
+    opacity: 1;
+  }
+
   .reel-wrap { position: relative; display: flex; justify-content: center; }
   .reel {
     position: relative;
-    width: 73%;
+    width: 80%;
     background: #0b0705;
     border-radius: 4px;
     padding: 0 58px;
@@ -51,7 +71,8 @@
     object-fit: cover;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
-  .reel-seam { height: 92px; }
+  .reel-seam { height: 38px; }
+  .reel-seam.with-label { height: 92px; }
 
   /* The label stamps straight across the tilted strip. */
   .reel-label {

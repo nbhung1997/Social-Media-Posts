@@ -210,7 +210,7 @@ function templateData({ slide, format, theme, content, brand, name, probes, logo
   const mark = slide.template === 'mark' ? decideMark(probe, logoPos, logoSize) : {};
   const reelFrames = (slide.photos || [])
     .map((p) => `<div class="reel-frame"><img src="${escapeHtml(fileUrl(p))}" alt=""></div>`)
-    .join('<div class="reel-seam"></div>');
+    .join(`<div class="reel-seam${label ? ' with-label' : ''}"></div>`);
   return {
     photoPos: photoPosition(probe, brand.formats[format]),
     ...mark,
