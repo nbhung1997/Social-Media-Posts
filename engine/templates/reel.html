@@ -9,24 +9,57 @@
      sprocket rails, edge codes in ledger type, the label stamped across. */
   .stage { justify-content: center; gap: 44px; }
 
-  /* The tabletop itself: lamplit wooden boards with visible grain. */
+  /* The tabletop itself: lamplit wooden boards with visible grain.
+     Three turbulence scales — long figure, fine tooth, broad tonal patches —
+     over chamfered plank seams at two interfering widths. */
   .bg::before {
     background:
-      radial-gradient(115% 85% at 26% 6%, rgba(236, 192, 126, 0.32), transparent 58%),
-      radial-gradient(150% 120% at 50% 118%, rgba(10, 5, 2, 0.62), transparent 62%),
-      linear-gradient(162deg, #59402a 0%, #4a3320 42%, #33220f 100%);
+      radial-gradient(115% 85% at 26% 6%, rgba(240, 192, 118, 0.4), transparent 58%),
+      radial-gradient(52% 34% at 64% 22%, rgba(255, 222, 158, 0.1), transparent 72%),
+      radial-gradient(150% 120% at 50% 118%, rgba(8, 4, 2, 0.72), transparent 64%),
+      linear-gradient(162deg, #55391f 0%, #452c15 42%, #27170a 100%);
   }
   .bg::after {
     background-image:
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='wood'><feTurbulence type='fractalNoise' baseFrequency='0.11 0.008' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.12 0 0 0 0 0.07 0 0 0 0 0.03 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23wood)'/></svg>"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='w1'><feTurbulence type='fractalNoise' baseFrequency='0.11 0.008' numOctaves='5' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.11 0 0 0 0 0.065 0 0 0 0 0.028 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23w1)'/></svg>"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='w2'><feTurbulence type='fractalNoise' baseFrequency='0.55 0.045' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 0.84 0 0 0 0 0.56 0 0 0 0.035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23w2)'/></svg>"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='w3'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.0035' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.06 0 0 0 0 0.035 0 0 0 0 0.015 0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23w3)'/></svg>"),
       repeating-linear-gradient(90deg,
-        rgba(255, 224, 176, 0.06) 0, rgba(255, 224, 176, 0.06) 2px,
+        rgba(255, 224, 176, 0.07) 0, rgba(255, 224, 176, 0.07) 2px,
         transparent 2px, transparent 214px,
-        rgba(0, 0, 0, 0.42) 214px, rgba(0, 0, 0, 0.42) 217px),
+        rgba(0, 0, 0, 0.5) 214px, rgba(0, 0, 0, 0.5) 217px),
       repeating-linear-gradient(90deg,
-        rgba(0, 0, 0, 0.10) 0, rgba(0, 0, 0, 0.10) 108px,
+        transparent 0, transparent 389px,
+        rgba(0, 0, 0, 0.14) 389px, rgba(0, 0, 0, 0.14) 391px,
+        rgba(255, 224, 176, 0.05) 391px, rgba(255, 224, 176, 0.05) 393px),
+      repeating-linear-gradient(90deg,
+        rgba(0, 0, 0, 0.11) 0, rgba(0, 0, 0, 0.11) 108px,
         transparent 108px, transparent 217px);
     opacity: 1;
+  }
+
+  /* Wordmark carved into the tabletop: a dark routed floor between a
+     shadowed upper-left wall and a lamplit lower-right bevel. */
+  .carve { position: relative; width: 232px; aspect-ratio: 1694 / 962; }
+  .carve > div {
+    position: absolute; inset: 0;
+    -webkit-mask: var(--logo-url) center / contain no-repeat;
+    mask: var(--logo-url) center / contain no-repeat;
+  }
+  .carve-sh {
+    transform: translate(-1.5px, -2px);
+    background: rgba(10, 5, 2, 0.7);
+    filter: blur(1px);
+  }
+  .carve-hi {
+    transform: translate(1.5px, 2.5px);
+    background: rgba(255, 210, 146, 0.32);
+    filter: blur(1px);
+  }
+  .carve-cut {
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='cf'><feTurbulence type='fractalNoise' baseFrequency='0.2 0.03' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.3 0 0 0 0 0.19 0 0 0 0 0.09 0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23cf)'/></svg>"),
+      linear-gradient(155deg, #1c1007 0%, #241609 45%, #170d05 100%);
   }
 
   .reel-wrap { position: relative; display: flex; justify-content: center; }
@@ -38,8 +71,9 @@
     padding: 0 58px;
     box-shadow:
       inset 0 1px 0 rgba(232, 196, 138, 0.05),
-      0 34px 90px -30px rgba(0, 0, 0, 0.85),
-      0 8px 24px -10px rgba(0, 0, 0, 0.6);
+      0 34px 90px -30px rgba(0, 0, 0, 0.9),
+      0 12px 30px -12px rgba(0, 0, 0, 0.75),
+      0 3px 8px -2px rgba(0, 0, 0, 0.8);
     transform: rotate(-1.6deg);
   }
   /* Sprocket rails — punched holes running down both edges. */
@@ -94,7 +128,11 @@
 <div class="bg"></div>
 <main class="stage">
   <header>
-    <div class="pp-wordmark" style="width: 218px" role="img" aria-label="Private Pattern"></div>
+    <div class="carve" role="img" aria-label="Private Pattern">
+      <div class="carve-sh"></div>
+      <div class="carve-hi"></div>
+      <div class="carve-cut"></div>
+    </div>
   </header>
   <div class="reel-wrap">
     <div class="reel">
