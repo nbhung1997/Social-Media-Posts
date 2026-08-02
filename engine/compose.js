@@ -157,7 +157,9 @@ function selvageText(brand) {
 // bottom corners preferred; cream on dark ground, walnut ink on light.
 // Centered placements (tc/bc) are explicit-only. Large marks get the full
 // engraved treatment plus an edge vignette so they read over any photo.
-function decideMark(probe, logoPos, logoSize) {
+const LOGO_FILLS = ['cream', 'ink'];
+
+function decideMark(probe, logoPos, logoSize, logoFill) {
   let pos = logoPos && logoPos !== 'auto' ? logoPos : null;
   if (pos && !LOGO_POSITIONS.includes(pos)) {
     throw new Error(`Unknown logo position "${pos}". Use one of: ${LOGO_POSITIONS.join(', ')}, auto.`);
@@ -185,7 +187,15 @@ function decideMark(probe, logoPos, logoSize) {
     : corners?.[pos]?.mean ?? 0.3;
   // The vignette darkens the edge behind a large mark, so cream keeps working
   // on brighter grounds than a bare small mark would tolerate.
-  const fill = mean > (size === 'large' ? 0.78 : 0.62) ? 'fill-ink' : 'fill-cream';
+  let fill;
+  if (logoFill && logoFill !== 'auto') {
+    if (!LOGO_FILLS.includes(logoFill)) {
+      throw new Error(`Unknown logo fill "${logoFill}". Use one of: ${LOGO_FILLS.join(', ')}, auto.`);
+    }
+    fill = `fill-${logoFill}`;
+  } else {
+    fill = mean > (size === 'large' ? 0.78 : 0.62) ? 'fill-ink' : 'fill-cream';
+  }
   return {
     markPos: `pos-${pos}`,
     markFill: fill,
@@ -215,11 +225,11 @@ function photoPosition(probe, format) {
   return photoAR < formatAR * 0.8 ? 'center 30%' : 'center';
 }
 
-function templateData({ slide, format, theme, content, brand, name, probes, logoPos, logoSize, label, swatch }) {
+function templateData({ slide, format, theme, content, brand, name, probes, logoPos, logoSize, logoFill, label, swatch }) {
   const rng = seededRng(`ledger:${name}`);
   const ledgerNo = String(1 + Math.floor(rng() * 899)).padStart(3, '0');
   const probe = slide.photo ? (probes || []).find((p) => p.file === slide.photo) : null;
-  const mark = slide.template === 'mark' ? decideMark(probe, logoPos, logoSize) : {};
+  const mark = slide.template === 'mark' ? decideMark(probe, logoPos, logoSize, logoFill) : {};
   const reelFrames = (slide.photos || [])
     .map((p) => `<div class="reel-frame"><img src="${escapeHtml(fileUrl(p))}" alt=""></div>`)
     .join(`<div class="reel-seam${label ? ' with-label' : ''}"></div>`);
@@ -314,7 +324,7 @@ async function createPost(opts) {
       const formatDir = path.join(outDir, format);
       fs.mkdirSync(formatDir, { recursive: true });
       for (const slide of slides) {
-        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos, logoSize: opts.logoSize, label: opts.label, swatch: opts.swatch });
+        const data = templateData({ slide, format, theme, content: opts.content, brand, name: opts.name, probes, logoPos: opts.logoPos, logoSize: opts.logoSize, logoFill: opts.logoFill, label: opts.label, swatch: opts.swatch });
         const tpl = fs.readFileSync(path.join(TEMPLATE_DIR, `${slide.template}.html`), 'utf8');
         const htmlPath = path.join(buildDir, `${format}-${slide.index}.html`);
         fs.writeFileSync(htmlPath, renderTemplate(tpl, data));

@@ -29,6 +29,7 @@ Options:
   --theme <t>       auto | evening | morning                  (default: auto)
   --logo-pos <p>    mark template: auto | tl | tr | bl | br | tc | bc  (default: auto)
   --logo-size <s>   mark template: small | large               (default: small; large = engraved, edge vignette)
+  --logo-fill <f>   mark template: auto | cream | ink          (default: auto — picks by ground luminance)
   --label <s>       mark template: micro-label under the logo, e.g. "Live from the Studio"
   --pillar <p>      auto | ${PILLARS.join(' | ')} | general   (default: auto — rotates)
   --name <slug>     Post name; also seeds the copy rotation   (default: from first photo)
@@ -60,6 +61,7 @@ async function main() {
       theme: { type: 'string', default: 'auto' },
       'logo-pos': { type: 'string', default: 'auto' },
       'logo-size': { type: 'string', default: 'auto' },
+      'logo-fill': { type: 'string', default: 'auto' },
       label: { type: 'string' },
       pillar: { type: 'string', default: 'auto' },
       name: { type: 'string' },
@@ -153,6 +155,7 @@ async function main() {
     theme: values.theme,
     logoPos: values['logo-pos'],
     logoSize: values['logo-size'],
+    logoFill: values['logo-fill'],
     label: values.label,
     formats,
     outRoot: values.out ? path.resolve(values.out) : undefined,
